@@ -3,15 +3,15 @@ TARGET = hw2
 
 all: $(TARGET)
 
-$(TARGET): main.o number.o variable.o atom.o
+$(TARGET): mainTerm.o number.o variable.o atom.o
 ifeq (${OS}, Windows_NT) 
-	g++ -o $(TARGET) main.o number.o variable.o atom.o  -lgtest
+	g++ -o $(TARGET) mainTerm.o atom.o variable.o number.o -lgtest
 else
-	g++ -o $(TARGET) main.o number.o variable.o atom.o  -lgtest -lpthread
+	g++ -o $(TARGET) mainTerm.o atom.o variable.o number.o -lgtest -lpthread
 endif
 
-main.o: main.cpp variable.h number.h atom.h
-	g++ -std=c++11 -c main.cpp
+mainTerm.o: mainTerm.cpp utTerm.h
+	g++ -std=c++11 -c mainTerm.cpp
 
 atom.o: atom.h atom.cpp variable.h number.h
 	g++ -std=c++11 -c atom.cpp
