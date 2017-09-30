@@ -8,7 +8,7 @@ TEST(Atom, first) {
 
 TEST(Atom, tom) {
   Atom tom("tom");
-  ASSERT_EQ("tom", tom._symbol);
+  ASSERT_EQ("tom", tom.symbol());
 }
 
 TEST(Atom, match_tom_and_jerry) {

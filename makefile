@@ -15,6 +15,11 @@ utVariable: mainVariable.o
 mainVariable.o: mainVariable.cpp utVariable.h variable.h
 		g++ -std=c++11 -c mainVariable.cpp
 
+utNumber: mainNumber.o
+		g++ -o utNumber mainNumber.o -lgtest -lpthread
+mainNumber.o: mainNumber.cpp utNumber.h number.h
+		g++ -std=c++11 -c mainNumber.cpp
+
 #exp: mainExp.o
 #	g++ -o exp mainExp.o -lgtest -lpthread
 #mainExp.o: mainExp.cpp exp.h global.h
@@ -41,3 +46,38 @@ clean:
 	rm -f *.o madRace utAtom
 stat:
 	wc *.h *.cpp
+
+
+
+
+
+# INC_DIR = include
+# TARGET = hw1
+
+# all: $(TARGET)
+
+# $(TARGET): main.o Shapes.o Media.o Sort.o
+# ifeq (${OS}, Windows_NT) 
+# 	g++ -o $(TARGET) main.o Shapes.o Media.o Sort.o -lgtest
+# else
+# 	g++ -o $(TARGET) main.o Shapes.o Media.o Sort.o -lgtest -lpthread
+# endif
+
+# main.o: main.cpp utSort.h
+# 	g++ -std=gnu++0x -c main.cpp
+
+# Shapes.o: $(INC_DIR)/Shapes.h Shapes.cpp
+# 	g++ -std=gnu++0x -c Shapes.cpp
+
+# Media.o: $(INC_DIR)/Media.h Media.cpp
+# 	g++ -std=gnu++0x -c Media.cpp
+
+# Sort.o: $(INC_DIR)/Sort.h Sort.cpp
+# 	g++ -std=gnu++0x -c Sort.cpp
+
+# clean:	
+# ifeq (${OS}, Windows_NT) 
+# 	del *.o *.exe
+# else
+# 	rm -f *.o $(TARGET)
+# endif

@@ -8,7 +8,9 @@ using std::string;
 class Atom {
 public:
   Atom (string s):_symbol(s) {}
-  bool operator ==(Atom a) {return _symbol == a._symbol;}
+  string symbol() { return this->_symbol; }
+  bool operator ==(Atom a) {return _symbol == a.symbol();}
+private:
   string _symbol;
 };
 
