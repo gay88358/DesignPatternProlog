@@ -42,6 +42,7 @@ mainNumber.o: mainNumber.cpp utNumber.h number.h
 #g++ -std=c++11 -c var.cpp
 #list.o: list.h list.cpp term.h var.h
 #	g++ -std=c++11 -c list.cpp
+
 clean:
 	rm -f *.o madRace utAtom
 stat:

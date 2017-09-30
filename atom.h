@@ -4,12 +4,15 @@
 #include <string>
 
 using std::string;
-
+class Variable;
+class Number;
 class Atom {
 public:
-  Atom (string s):_symbol(s) {}
-  string symbol() { return this->_symbol; }
-  bool operator ==(Atom a) {return _symbol == a.symbol();}
+  Atom (string s);
+  string symbol();
+  bool match(Number n); 
+  bool match(Atom a);  
+  bool match(Variable *v);
 private:
   string _symbol;
 };

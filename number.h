@@ -1,14 +1,20 @@
 #ifndef NUMBER_H
 #define NUMBER_H
+
 #include <string>
 
 using std::string;
 
+class Atom;
+class Variable;
 class Number {
 public:
-    Number(string s) : _symbol(s) {}
-    string symbol() { return this->_symbol; }
-    string value() { return this->_value; };
+    Number(string s, string v); 
+    string symbol(); 
+    string value(); 
+    bool match(Number n); 
+    bool match(Atom n);
+    bool match(Variable *v);
 private:
     string _value;
     string _symbol;
