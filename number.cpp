@@ -12,7 +12,7 @@ string Number::symbol() {
 
 string Number::value() { 
     return this->_value; 
-};
+}
 
 bool Number::match(Number n) { 
     return this->_value == n.value(); 
