@@ -14,6 +14,7 @@ public:
   string value();
   bool match(Number n);
   bool match(Atom atom);
+  bool match(Variable &v);
 private:
   string _value;
   string _symbol;
