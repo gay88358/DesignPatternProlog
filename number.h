@@ -11,12 +11,12 @@ class Number {
 public:
     Number(int value); 
     string symbol(); 
-    int value(); 
+    string value(); 
     bool match(Number n); 
     bool match(Atom n);
     bool match(Variable &v);
 private:
-    int _value;
+    string _value;
     string _symbol;
 };
 

@@ -2,7 +2,7 @@
 #include "atom.h"
 #include "variable.h"
 
-Number::Number(int value) : _value(value), _symbol(std::to_string(this->_value)) {
+Number::Number(int value) : _value(std::to_string(value)), _symbol(std::to_string(value)) {
 
 }
 
@@ -10,7 +10,7 @@ string Number::symbol() {
     return this->_symbol;
 }
 
-int Number::value() { 
+string Number::value() { 
     return this->_value; 
 }
 
