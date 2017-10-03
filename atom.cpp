@@ -18,6 +18,6 @@ bool Atom::match(Atom a) {
     return _symbol == a.symbol(); 
 }  
 
-bool Atom::match(Variable *v) { 
-    return v->match(_symbol); 
+bool Atom::match(Variable &v) { 
+    return v.match(*this);
 }

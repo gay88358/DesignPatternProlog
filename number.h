@@ -14,7 +14,7 @@ public:
     int value(); 
     bool match(Number n); 
     bool match(Atom n);
-    bool match(Variable *v);
+    bool match(Variable &v);
 private:
     int _value;
     string _symbol;
