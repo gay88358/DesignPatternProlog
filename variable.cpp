@@ -14,8 +14,8 @@ string Variable::value() {
 
 bool Variable::match(Number n) {
   bool assign = false;
-  if (_value.empty() || n.value() == _value) {
-    _value = n.value();
+  if (_value.empty() || n.symbol() == _value) {
+    _value = n.symbol();
     assign = true;
   }
   return assign;

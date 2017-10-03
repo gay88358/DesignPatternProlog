@@ -9,14 +9,14 @@ class Atom;
 class Variable;
 class Number {
 public:
-    Number(string s, string v); 
+    Number(int value); 
     string symbol(); 
-    string value(); 
+    int value(); 
     bool match(Number n); 
     bool match(Atom n);
     bool match(Variable *v);
 private:
-    string _value;
+    int _value;
     string _symbol;
 };
 

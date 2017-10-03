@@ -2,15 +2,15 @@
 #include "atom.h"
 #include "variable.h"
 
-Number::Number(string s, string v) : _symbol(s), _value(v) {
+Number::Number(int value) : _value(value), _symbol(std::to_string(this->_value)) {
 
 }
 
 string Number::symbol() { 
-    return this->_symbol; 
+    return this->_symbol;
 }
 
-string Number::value() { 
+int Number::value() { 
     return this->_value; 
 }
 
@@ -23,5 +23,5 @@ bool Number::match(Atom n) {
 }  
 
 bool Number::match(Variable *v) {
-    return v->match(this->_value);
+    return v->match(*this);
 }  
