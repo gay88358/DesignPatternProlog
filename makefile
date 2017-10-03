@@ -11,16 +11,16 @@ else
 endif
 
 mainTerm.o: mainTerm.cpp utTerm.h
-	g++ -std=c++11 -c mainTerm.cpp
+	g++ -std=gnu++0x -c mainTerm.cpp
 
 atom.o: atom.h atom.cpp variable.h number.h
-	g++ -std=c++11 -c atom.cpp
+	g++ -std=gnu++0x -c atom.cpp
 
 variable.o: variable.h variable.cpp atom.h number.h
-	g++ -std=c++11 -c variable.cpp
+	g++ -std=gnu++0x -c variable.cpp
 
 number.o: number.h number.cpp variable.h atom.h
-	g++ -std=c++11 -c number.cpp	
+	g++ -std=gnu++0x -c number.cpp	
 
 clean:	
 ifeq (${OS}, Windows_NT) 
