@@ -1,6 +1,15 @@
 {
     "files.associations": {
         "chrono": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "iosfwd": "cpp",
+        "__config": "cpp",
+        "cstddef": "cpp",
+        "exception": "cpp",
+        "initializer_list": "cpp",
+        "new": "cpp",
+        "stdexcept": "cpp",
+        "typeinfo": "cpp",
+        "ostream": "cpp"
     }
 }

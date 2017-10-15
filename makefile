@@ -1,26 +1,33 @@
 INC_DIR = include
-TARGET = hw2
+SRC = src
+TARGET = hw3
 
 all: $(TARGET)
 
-$(TARGET): mainTerm.o number.o variable.o atom.o
+$(TARGET): mainTerm.o number.o variable.o atom.o struct.o term.o 
 ifeq (${OS}, Windows_NT) 
-	g++ -o $(TARGET) mainTerm.o atom.o variable.o number.o -lgtest
+	g++ -o $(TARGET) mainTerm.o atom.o variable.o number.o struct.o term.o -lgtest
 else
-	g++ -o $(TARGET) mainTerm.o atom.o variable.o number.o -lgtest -lpthread
+	g++ -o $(TARGET) mainTerm.o atom.o variable.o number.o struct.o term.o -lgtest -lpthread
 endif
 
-mainTerm.o: mainTerm.cpp utTerm.h
+mainTerm.o: mainTerm.cpp utStruct.h utVariable.h 
 	g++ -std=gnu++0x -c mainTerm.cpp
 
-atom.o: atom.h atom.cpp variable.h number.h
-	g++ -std=gnu++0x -c atom.cpp
+term.o: $(INC_DIR)/term.h $(SRC)/term.cpp 
+	g++ -std=gnu++0x -c $(SRC)/term.cpp
 
-variable.o: variable.h variable.cpp atom.h number.h
-	g++ -std=gnu++0x -c variable.cpp
+struct.o: $(INC_DIR)/struct.h $(SRC)/struct.cpp $(INC_DIR)/atom.h 
+	g++ -std=gnu++0x -c $(SRC)/struct.cpp
 
-number.o: number.h number.cpp variable.h atom.h
-	g++ -std=gnu++0x -c number.cpp	
+atom.o: $(INC_DIR)/atom.h $(SRC)/atom.cpp $(INC_DIR)/variable.h $(INC_DIR)/number.h
+	g++ -std=gnu++0x -c $(SRC)/atom.cpp
+
+variable.o: $(INC_DIR)/variable.h $(SRC)/variable.cpp $(INC_DIR)/atom.h $(INC_DIR)/number.h
+	g++ -std=gnu++0x -c $(SRC)/variable.cpp
+
+number.o: $(INC_DIR)/number.h $(SRC)/number.cpp $(INC_DIR)/variable.h $(INC_DIR)/atom.h
+	g++ -std=gnu++0x -c $(SRC)/number.cpp	
 
 clean:	
 ifeq (${OS}, Windows_NT) 
