@@ -10,6 +10,13 @@
         "new": "cpp",
         "stdexcept": "cpp",
         "typeinfo": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "iterator": "cpp",
+        "vector": "cpp",
+        "memory": "cpp",
+        "utility": "cpp",
+        "list": "cpp",
+        "__locale": "cpp",
+        "ios": "cpp"
     }
 }

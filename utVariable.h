@@ -6,6 +6,22 @@
 #include "./include/atom.h"
 #include "./include/struct.h"
 
+TEST(Variable, test){
+    Variable X("X");
+    Variable Y("Y");
+    Variable Z("Z");
+    
+    Number n(1);
+    Number n1(5);
+    
+    ASSERT_TRUE(X.match(n));
+    ASSERT_TRUE(X.match(Y));
+    ASSERT_FALSE(Y.match(n1));
+    ASSERT_EQ("1", X.value());
+    ASSERT_EQ("1", Y.value());
+}
+
+
 TEST(Variable, constructor){
     Variable X("X");
     ASSERT_EQ("X", X.symbol());
@@ -25,8 +41,6 @@ TEST (Variable , haveValue){
     ASSERT_TRUE(X.match(tom));
     ASSERT_FALSE(X.match(jerry));
 }
-
-
 // ?- X=2.7182.
 // X=2.7182
 TEST(Variable , numE_to_varX){
@@ -35,9 +49,6 @@ TEST(Variable , numE_to_varX){
     ASSERT_TRUE(X.match(n));
     ASSERT_EQ("2.7182", X.value());
 }
-
-
-
 // ?- X=Y, X=1.
 // Y=1
 TEST (Variable, varY_to_varX_and_num1_to_varX) {
@@ -48,9 +59,6 @@ TEST (Variable, varY_to_varX_and_num1_to_varX) {
     ASSERT_TRUE(X.match(one));
     ASSERT_EQ("1", Y.value());
 }
-
-
-
 // ?- X=Y, Y=1.
 // X=1
 TEST (Variable, varY_to_varX_and_num1_to_varY) {
@@ -61,9 +69,6 @@ TEST (Variable, varY_to_varX_and_num1_to_varY) {
     ASSERT_TRUE(Y.match(one));
     ASSERT_EQ("1", X.value());
 }
-
-
-
 // ?- X=X, X=1.
 // X=1
 TEST (Variable, varX_match_varX_and_num1_to_varX) {
@@ -73,8 +78,6 @@ TEST (Variable, varX_match_varX_and_num1_to_varX) {
     ASSERT_TRUE(X.match(one));
     ASSERT_EQ("1", X.value());
 }
-
-
 // ?- Y=1, X=Y.
 // X=1
 TEST (Variable, num1_to_varY_and_varX_match_varY) {
@@ -85,9 +88,6 @@ TEST (Variable, num1_to_varY_and_varX_match_varY) {
     ASSERT_TRUE(X.match(Y));
     ASSERT_EQ("1", X.value());    
 }
-
-
-
 // ?- X=Y, Y=Z, Z=1
 // X=1, Y=1, Z=1
 TEST (Variable, num1_to_varZ_to_varY_to_varX) {
@@ -103,9 +103,6 @@ TEST (Variable, num1_to_varZ_to_varY_to_varX) {
     ASSERT_EQ("1", Y.value());    
     ASSERT_EQ("1", Z.value());    
 }
-
-
-
 // ?- X=Y, X=Z, Z=1
 // X=1, Y=1, Z=1
 TEST (Variable, num1_to_varZ_to_varX_and_varY_to_varX) {
@@ -122,8 +119,6 @@ TEST (Variable, num1_to_varZ_to_varX_and_varY_to_varX) {
     EXPECT_EQ("1", Y.value());    
 
 }
-
-
 // Give there is a Struct s contains Variable X
 // And another Variable Y
 // When Y matches Struct s
@@ -140,9 +135,6 @@ TEST (Variable, Struct1) {
     ASSERT_EQ("s(X)", Y.value());    
     
 }
-
-
-
 // Give there is a Struct s contains Variable X
 // And another Variable Y
 // When Y matches Struct s
@@ -160,5 +152,4 @@ TEST (Variable, Struct2) {
     ASSERT_EQ("Y", Y.symbol());    
     ASSERT_EQ("s(teddy)", Y.value());    
 }
-
 #endif

@@ -15,9 +15,10 @@ public:
     Term* args(int index) const;
     string symbol() const;
     string value() const;
-    Atom name() const;
+    Term* name();    
+    int argSize() const;
+    vector<Term*> args() const;
     bool match(Term &term);
-    int length();        
 protected:
     Atom _name;
     vector<Term*> _args;

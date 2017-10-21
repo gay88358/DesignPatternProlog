@@ -11,10 +11,24 @@ string Term::value() const {
 }
 
 bool Term::match(Term &term) {
-    Variable *v = dynamic_cast<Variable *>(&term);
-    if (v) {
-        std::cout << "variable" << std::endl;
-        return v->match(*this);
-    }
+    if (term.type() == "Variable")
+        return term.match(*this);
     return _symbol == term._symbol;
+}
+
+Term* Term::name() {
+    return NULL;
+}
+
+string Term::type() const {
+    return this->_type;
+}
+
+int Term::argSize() const {
+    return 0;
+}
+
+vector<Term*> Term::args() const {
+    vector<Term*> v;
+    return v;
 }

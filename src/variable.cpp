@@ -4,6 +4,7 @@
 
 Variable::Variable(string s) {
     this->_symbol = s;
+    this->_type = "Variable";
 }
 
 string Variable::value() const { 

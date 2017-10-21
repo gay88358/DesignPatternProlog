@@ -4,18 +4,23 @@
 #include <iostream>
 
 Struct::Struct(Atom name, vector<Term*> args) : _name(name), _args(args) {
+    this->_type = "Struct";    
 }
 
-Atom Struct::name() const {
-    return this->_name;
+int Struct::argSize() const {
+    return this->_args.size();
+}
+
+vector<Term*> Struct::args() const {
+    return this->_args;
 }
 
 Term* Struct::args(int index) const{
     return this->_args[index];
 }
 
-int Struct::length() {
-    return this->_args.size();
+Term* Struct::name() {
+    return &this->_name;
 }
 
 string Struct::value() const {
@@ -38,19 +43,16 @@ string Struct::symbol() const {
 
 bool Struct::match(Term &term) {
     bool assign = false;
-    Struct *s = dynamic_cast<Struct *>(&term);
-    if (s) { // term is a struct
-        if (!s->_name.match(this->_name) || _args.size() != s->_args.size()) 
-            // the functor of struct different
-            // the size of args of struct different 
+    if (_type == term.type()) {
+        if (!term.name()->match(this->_name) || this->_args.size() != term.argSize())
             return assign;
-
-        for (int i = 0; i < this->_args.size(); i++) {
-            // once the symbol of args is different then return false 
-            if (this->_args[i]->symbol() != s->_args[i]->symbol())
+        for (int i = 0; i < this->_args.size(); i++)
+            if (this->_args[i]->symbol() != term.args()[i]->symbol())
                 return assign;
-        }
         assign = true;
     }
+
+    if (term.type() == "Variable")
+        return term.match(*this);
     return assign;
 }

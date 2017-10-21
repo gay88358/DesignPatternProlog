@@ -8,13 +8,25 @@
 #include "./include/variable.h"
 #include "./include/number.h"
 
+
+TEST(Struct, struct_match_to_variable) {
+    Variable X("X");
+    Atom tom("tom");
+    Atom chaseMouse("chaseMouse");
+    std::vector<Term *> v = {&tom, &chaseMouse};
+    Struct hobby(Atom("hobby"), v);
+    ASSERT_TRUE(hobby.match(X));
+    ASSERT_TRUE(X.match(hobby));
+    ASSERT_FALSE(X.match(tom));
+}
+
 TEST(Struct, hobby)
 {
     Atom tom("tom");
     Atom chaseMouse("chaseMouse");
     std::vector<Term *> v = {&tom, &chaseMouse};
     Struct hobby(Atom("hobby"), v);
-    ASSERT_EQ("hobby", hobby.name().symbol());
+    ASSERT_EQ("hobby", hobby.name()->symbol());
     ASSERT_EQ("tom", hobby.args(0)->symbol());
     ASSERT_EQ("chaseMouse", hobby.args(1)->symbol());
 }

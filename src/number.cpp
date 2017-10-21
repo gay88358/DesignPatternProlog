@@ -8,4 +8,5 @@ Number::Number(double value)
     std::stringstream ss;
     ss << value;
     this->_value = this->_symbol = ss.str();
+    this->_type = "Number";
 }
