@@ -45,18 +45,25 @@ bool List::match(Term & term) {
         }
         assign = true;
     }
+    if ("Variable" == term.type()) {
+        term.match(*this);
+    }
     return assign;
 }
 
 Term * List::head() const{
-    //if (this->_elements.size() == 0) {
-        //throw headInEmptyListException("Accessing head in an empty list");          
-    //}
+    if (this->_elements.empty()) {
+        throw string("Accessing head in an empty list");
+    }
     Term *h = this->_elements[0];
     return h;
 }
 
 List * List::tail() {
+    if (this->_elements.empty()) {
+        throw string("Accessing tail in an empty list");
+    }
+
     vector<Term*>::iterator f = this->_elements.begin() + 1;
     vector<Term*>::iterator l = this->_elements.end();
     return new List(vector<Term *>(f, l));

@@ -15,6 +15,15 @@ string Variable::value() const {
 
 bool Variable::match(Term &term) { // match still has some problem in string compare like "" and so on
     if (_instance == NULL) {
+        if (term.type() == "List") {
+            vector<Term*> args = term.args();
+            for (int i = 0; i < args.size(); i++) {
+                if (args[i] == this) {
+                    return false;
+                }
+            }
+        }
+
         if (&term != this) { // X = X
             _instance = & term;
         }
