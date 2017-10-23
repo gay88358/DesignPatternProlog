@@ -53,7 +53,7 @@ bool List::match(Term & term) {
 
 Term * List::head() const{
     if (this->_elements.empty()) {
-        throw string("Accessing head in an empty list");
+        //throw string("Accessing head in an empty list");
     }
     Term *h = this->_elements[0];
     return h;
@@ -61,7 +61,7 @@ Term * List::head() const{
 
 List * List::tail() {
     if (this->_elements.empty()) {
-        throw string("Accessing tail in an empty list");
+        //throw string("Accessing tail in an empty list");
     }
 
     vector<Term*>::iterator f = this->_elements.begin() + 1;
