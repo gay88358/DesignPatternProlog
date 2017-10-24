@@ -46,7 +46,7 @@ bool List::match(Term & term) {
         assign = true;
     }
     if ("Variable" == term.type()) {
-        term.match(*this);
+        return term.match(*this);
     }
     return assign;
 }

@@ -21,9 +21,11 @@ bool Variable::match(Term &term) { // match still has some problem in string com
                 if (args[i] == this) 
                     return false;
         }
-        
+
         if (&term != this) { // X = X
             _instance = & term;
+            //std::cout << "Var match success" << std::endl;
+            //return true;
         }
     } else {
         _instance->match(term);

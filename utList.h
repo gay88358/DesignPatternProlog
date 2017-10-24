@@ -18,6 +18,13 @@ TEST (List, constructor) {
 }
 
 
+TEST (List, matchToVarShouldSucceed1) {
+    List l;
+    Variable Y("Y");
+    ASSERT_TRUE(l.match(Y));
+}
+
+
 
 // Given there are two perfect numbers: 8128
 // When create a new list with the perfect Number
