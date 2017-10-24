@@ -11,7 +11,7 @@ else
 	g++ -o $(TARGET) mainTerm.o atom.o variable.o number.o struct.o term.o list.o -lgtest -lpthread
 endif
 
-mainTerm.o: mainTerm.cpp utStruct.h utVariable.h 
+mainTerm.o: mainTerm.cpp utList.h 
 	g++ -std=gnu++0x -c mainTerm.cpp
 
 term.o: $(INC_DIR)/term.h $(SRC)/term.cpp 

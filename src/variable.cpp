@@ -29,4 +29,5 @@ bool Variable::match(Term &term) { // match still has some problem in string com
         _instance->match(term);
     }
     return this->value() == term.value();
+    
 }

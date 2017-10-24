@@ -41,6 +41,23 @@ TEST (Variable , haveValue){
     ASSERT_TRUE(X.match(tom));
     ASSERT_FALSE(X.match(jerry));
 }
+// ?- X=Y, Y=Z, Z=X, Z = 5
+// X=Y=Z=5
+TEST(Variable, x_y_z_x_match) {
+    Variable X("X");  
+    Variable Y("Y");  
+    Variable Z("Z");  
+    Number five(5);
+    ASSERT_TRUE(X.match(Y));
+    ASSERT_TRUE(Y.match(Z));
+    ASSERT_TRUE(Z.match(X));
+    ASSERT_TRUE(Z.match(five));
+    ASSERT_EQ("5", X.value());
+
+    ASSERT_EQ("5", Y.value());
+    ASSERT_EQ("5", Z.value());
+}
+
 // ?- X=2.7182.
 // X=2.7182
 TEST(Variable , numE_to_varX){

@@ -190,7 +190,6 @@ TEST(Struct, nested_struct3)
 TEST(Struct, nested_struct_and_multiVariable)
 {
     Variable X("X");
-
     Variable Y("Y");
     std::vector<Term*> v = { &Y };    
     Struct s2(Atom("s2"), v);
