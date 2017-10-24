@@ -12,6 +12,7 @@ public:
     string value() const;
     bool match(Term &term);
 private:
+    string head;
     Term * _instance = NULL;
 };
 

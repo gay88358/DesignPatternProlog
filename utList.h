@@ -17,14 +17,16 @@ TEST (List, constructor) {
     ASSERT_EQ("[]", l.symbol());
 }
 
-
-TEST (List, matchToVarShouldSucceed1) {
-    List l;
+// [X, Y] = [Y, X]
+TEST(List, matchToSameListWithDiffVarNameShouldSucceed11) {
+    Variable X("X");
     Variable Y("Y");
-    ASSERT_TRUE(l.match(Y));
+    vector<Term*> v = { &X, &Y };
+    List l(v);
+    vector<Term*> v1 = { &Y, &X };
+    List l1(v1);
+    ASSERT_TRUE(l.match(l1));
 }
-
-
 
 // Given there are two perfect numbers: 8128
 // When create a new list with the perfect Number
@@ -160,7 +162,6 @@ TEST(List, matchToSameListWithDiffVarNameShouldSucceed) {
 TEST(List, matchToVarToAtominListShouldSucceed) {
     Number n(496);
     Variable X("X");
-    Variable Y("Y");
     Atom terence_tao("terence_tao");
     std::vector<Term*> v = { &n, &X, &terence_tao };
     List l(v);
@@ -170,8 +171,6 @@ TEST(List, matchToVarToAtominListShouldSucceed) {
     ASSERT_TRUE(l.match(l2));        
     ASSERT_EQ("8128", X.value());    
 }
-
-
 
 // ?- Y = [496, X, terence_tao], X = alan_mathison_turing.
 // Y = [496, alan_mathison_turing, terence_tao],

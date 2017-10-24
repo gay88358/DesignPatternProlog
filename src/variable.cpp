@@ -14,6 +14,22 @@ string Variable::value() const {
 }
 
 bool Variable::match(Term &term) { // match still has some problem in string compare like "" and so on
+    /*if (_instance == NULL) {
+        if (term.type() == "List") {
+            vector<Term*> args = term.args();
+            for (int i = 0; i < args.size(); i++) 
+                if (args[i] == this) 
+                    return false;
+        }
+
+        if (&term != this) { // X = X 
+            _instance = & term;                 
+        }
+    } else {
+        _instance->match(term);
+    }
+    return this->value() == term.value();*/
+
     if (_instance == NULL) {
         if (term.type() == "List") {
             vector<Term*> args = term.args();
@@ -22,14 +38,12 @@ bool Variable::match(Term &term) { // match still has some problem in string com
                     return false;
         }
 
-        if (&term != this) { // X = X
-            _instance = & term;
-            //std::cout << "Var match success" << std::endl;
-            //return true;
-        }
+        if (&term != this)
+            _instance = &term;
+        return true;    
     } else {
-        _instance->match(term);
+        if (term.symbol() == _instance->symbol() && &term == _instance) return true;        
+        return _instance->match(term);        
     }
-    return this->value() == term.value();
     
 }
