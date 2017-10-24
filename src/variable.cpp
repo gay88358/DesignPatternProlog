@@ -21,7 +21,6 @@ bool Variable::match(Term &term) { // match still has some problem in string com
                 if (args[i] == this) 
                     return false;
         }
-
         if (&term != this) { // X = X
             _instance = & term;
         }
