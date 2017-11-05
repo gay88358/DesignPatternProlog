@@ -53,11 +53,103 @@ TEST(Variable, x_y_z_x_match) {
     ASSERT_TRUE(Z.match(X));
     ASSERT_TRUE(Z.match(five));
     ASSERT_EQ("5", X.value());
+    ASSERT_EQ("5", Y.value());
+    ASSERT_EQ("5", Z.value());
+}
+// ?- X=Y, Y=Z, Z=X, X=5
+// X=Y=Z=5
+TEST(Variable, x_y_z_x_match_x) {
+    Variable X("X");  
+    Variable Y("Y");  
+    Variable Z("Z");  
+    Number five(5);
+    ASSERT_TRUE(X.match(Y));
+    ASSERT_TRUE(Y.match(Z));
+    ASSERT_TRUE(Z.match(X));
+    ASSERT_TRUE(X.match(five));
+    ASSERT_EQ("5", X.value());
 
     ASSERT_EQ("5", Y.value());
     ASSERT_EQ("5", Z.value());
 }
-
+// ?- X=Y, Y=Z, Z=X, Y=5
+// X=Y=Z=5
+TEST(Variable, x_y_z_x_match_y) {
+    Variable X("X");  
+    Variable Y("Y");  
+    Variable Z("Z");  
+    Number five(5);
+    ASSERT_TRUE(X.match(Y));
+    ASSERT_TRUE(Y.match(Z));
+    ASSERT_TRUE(Z.match(X));
+    ASSERT_TRUE(Y.match(five));
+    ASSERT_EQ("5", X.value());
+    ASSERT_EQ("5", Y.value());
+    ASSERT_EQ("5", Z.value());
+    Number one(1);
+    
+    ASSERT_TRUE(Z.match(five));
+    ASSERT_FALSE(Z.match(one));
+}
+// ?- X=Y, Z=X, X=5
+// X=Y=Z=5
+TEST(Variable, complex_match) {
+    Variable X("X");  
+    Variable Y("Y");  
+    Variable Z("Z");  
+    Number five(5);
+    ASSERT_TRUE(X.match(Y));
+    ASSERT_TRUE(Z.match(X));
+    ASSERT_TRUE(X.match(five));
+    ASSERT_EQ("5", X.value());
+    ASSERT_EQ("5", Y.value());
+    ASSERT_EQ("5", Z.value());
+}
+// ?- X=Y, Z=X, Y=Z, Z=5
+// 
+TEST(Variable, complex_match_1) {
+    Variable X("X");  
+    Variable Y("Y");  
+    Variable Z("Z");  
+    Number five(5);
+    ASSERT_TRUE(X.match(Y));
+    ASSERT_TRUE(Z.match(X));
+    ASSERT_TRUE(Y.match(Z));
+    ASSERT_TRUE(Z.match(five));
+    ASSERT_EQ("5", X.value());
+    ASSERT_EQ("5", Y.value());
+    ASSERT_EQ("5", Z.value());
+}
+// ?- Y=Z, Z=X, X=Y,  Z=5
+// 
+TEST(Variable, complex_match_2) {
+    Variable X("X");  
+    Variable Y("Y");  
+    Variable Z("Z");  
+    Number five(5);
+    ASSERT_TRUE(Y.match(Z));    
+    ASSERT_TRUE(Z.match(X));
+    ASSERT_TRUE(X.match(Y));
+    ASSERT_TRUE(Z.match(five));
+    ASSERT_EQ("5", X.value());
+    ASSERT_EQ("5", Y.value());
+    ASSERT_EQ("5", Z.value());
+}
+// ?- Z=X, Y=Z, X=Y,  X=5
+// 
+TEST(Variable, complex_match_3) {
+    Variable X("X");  
+    Variable Y("Y");  
+    Variable Z("Z");  
+    Number five(5);
+    ASSERT_TRUE(Z.match(X));    
+    ASSERT_TRUE(Y.match(Z));
+    ASSERT_TRUE(X.match(Y));
+    ASSERT_TRUE(X.match(five));
+    ASSERT_EQ("5", X.value());
+    ASSERT_EQ("5", Y.value());
+    ASSERT_EQ("5", Z.value());
+}
 // ?- X=2.7182.
 // X=2.7182
 TEST(Variable , numE_to_varX){

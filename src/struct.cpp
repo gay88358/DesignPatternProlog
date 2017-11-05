@@ -23,6 +23,10 @@ Term* Struct::name() {
     return &this->_name;
 }
 
+int Struct::arity() {
+    return this->_args.size();
+}
+
 string Struct::value() const {
     string value = this->_name.symbol() + "(";
     for (int i = 0; i < this->_args.size() - 1; i++) {
@@ -33,7 +37,10 @@ string Struct::value() const {
 }
  
 string Struct::symbol() const {
+    
     string symbol = this->_name.symbol() + "(";
+    if (this->_args.size() == 0)
+        return symbol + ")";
     for (int i = 0; i < this->_args.size() - 1; i++) {
         symbol += this->_args[i]->symbol() + ", "; 
     }

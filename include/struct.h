@@ -12,6 +12,7 @@ using std::vector;
 class Struct : public Term {
 public:
     Struct(Atom name, vector<Term*> args);
+    int arity();
     Term* args(int index) const;
     string symbol() const;
     string value() const;

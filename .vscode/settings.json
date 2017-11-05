@@ -17,6 +17,7 @@
         "utility": "cpp",
         "list": "cpp",
         "__locale": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "stack": "cpp"
     }
 }
