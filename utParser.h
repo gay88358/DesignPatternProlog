@@ -251,6 +251,9 @@ TEST(Parser, listOfTermsTwo) {
     ASSERT_EQ("tom", parser.createTerm()->symbol());
 }
 
+
+
+
 // Given there is string: " 12345,  67" in scanner.
 // When parser parses all terms via scanner.
 // Then it should return two terms, one is "12345", another is "67".
@@ -274,10 +277,7 @@ TEST(ParserTest, parseStructOfStructAllTheWay2) {
     ASSERT_EQ("s(s(s(s(1))))", parser.createTerm()->symbol());
     ASSERT_EQ(nullptr, parser.createTerm());
     ASSERT_EQ("b(1, 2, 3)", parser.createTerm()->symbol());
-
 }
-
-
 
 // Given there is string: " 12345,  tom,   Date" in scanner.
 // When parser parses all terms via scanner.
@@ -290,6 +290,22 @@ TEST(ParserTest, listOfTermsThree) {
     ASSERT_EQ("tom", parser.createTerm()->symbol());
     ASSERT_EQ(nullptr, parser.createTerm());
     ASSERT_EQ("Date", parser.createTerm()->symbol());
+}
+
+TEST(ParserTest, parseStructOfStructAllTheWay3) {
+    Scanner scanner("s(s(s(s(1)))), b(1,2,3), tom, X, 12.222");
+    Parser parser(scanner);
+    ASSERT_EQ("s(s(s(s(1))))", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    ASSERT_EQ("b(1, 2, 3)", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    ASSERT_EQ("tom", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    ASSERT_EQ("X", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    ASSERT_EQ("12.222", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    
 }
 
 #endif

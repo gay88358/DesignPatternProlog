@@ -100,6 +100,11 @@ TEST(Scanner, illegal_2) {
     ASSERT_FALSE(scanner.isLegal());
 }
 
+TEST(Scanner, illegal_3) {
+    Scanner scanner("[(((1, 2)))]");
+    ASSERT_TRUE(scanner.isLegal());
+}
+
 TEST(Scanner, multiple_scan) {
     Scanner scanner(" 12345,  tom,   Date");
     Token *token = scanner.nextToken();

@@ -86,15 +86,12 @@ bool Scanner::isLegal() {
 
 bool Scanner::isStructFormat() {
     int index = this->position();
-    while (this->_buffer[index] == '.' && index <= this->_buffer.length()) {
-        index++;
+    while (this->_buffer[index++] == '.' && index <= this->_buffer.length()) {
         if (this->_buffer[index] == '(')
             return true;
     }
     return false;
-    // return this->_buffer[this->_position + 1] == '.' && this->_buffer[this->_position + 2] == '.';
 }
-
 
 string Scanner::extractDotStruct() {
     int begin = this->position();

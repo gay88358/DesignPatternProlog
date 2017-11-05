@@ -6,21 +6,14 @@ Term* Parser::createTerm() {
     // illegal
     if (!this->_scanner.isLegal())
         throw string("unexpected token");
-    // get token
-    this->_currentToken = this->_scanner.nextToken();
-    // remember the current token
 
+    this->_currentToken = this->_scanner.nextToken();
     if (_currentToken->tokenType() == _g.VAR) {
         return new Variable(_currentToken->tokenValue());
     } else if (_currentToken->tokenType() == _g.ATOM) {        
         Atom *atom = new Atom(_currentToken->tokenValue());
-        /*_currentToken = this->_scanner.nextToken();
-        if (_currentToken->tokenValue() != "(" || _currentToken->tokenValue() == "EOS") {
-            return atom;    
-        }*/
         if (this->_scanner.currentChar() != '(')
             return atom;
-        
         this->_scanner.nextToken();    
         return new Struct(*atom, this->getArgs());
     } else if (_currentToken->tokenType() == _g.NUMBER) {
@@ -28,7 +21,6 @@ Term* Parser::createTerm() {
     } else if (_currentToken->tokenValue() == "[") {
         return new List(this->getArgs());
     } else if (_currentToken->tokenType() == ',') {
-        cout << "type is equal to ', '" << endl;
         return NULL;
     }
     else 
