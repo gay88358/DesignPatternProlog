@@ -33,7 +33,7 @@ vector<Term*> Parser::getArgs() {
     if (term == NULL)  {
         return args;
     }
-    if (term ) {
+    if (term) {
         args.push_back(term);
     }
     while (!this->createTerm() && _currentToken->tokenValue() == ",") { // null && value is ', '

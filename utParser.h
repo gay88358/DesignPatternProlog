@@ -222,7 +222,7 @@ TEST(Parser, ListAsStruct) {
 // When parser parses all terms via scanner.
 // Then it should return nothing.
 TEST(Parser, listOfTermsEmpty) {
-    Scanner scanner("");
+    Scanner scanner;
     Parser parser(scanner);
     ASSERT_EQ(nullptr, parser.createTerm());
 }
@@ -246,9 +246,9 @@ TEST(Parser, illegal1) {
 TEST(Parser, listOfTermsTwo) {
     Scanner scanner(" 12345,  tom");
     Parser parser(scanner);
-    ASSERT_EQ("12345", parser.createTerm()->symbol());
-    ASSERT_EQ(nullptr, parser.createTerm());
-    ASSERT_EQ("tom", parser.createTerm()->symbol());
+    vector<Term *> args = parser.getArgs();
+    ASSERT_EQ("12345", args[0]->symbol());
+    ASSERT_EQ("tom", args[1]->symbol());
 }
 
 
@@ -260,9 +260,9 @@ TEST(Parser, listOfTermsTwo) {
 TEST(Parser, listOfTermsTwoNumbers) {
     Scanner scanner(" 12345,  67");
     Parser parser(scanner);
-    ASSERT_EQ("12345", parser.createTerm()->symbol());
-    ASSERT_EQ(nullptr, parser.createTerm());
-    ASSERT_EQ("67", parser.createTerm()->symbol());
+    vector<Term *> args = parser.getArgs();    
+    ASSERT_EQ("12345", args[0]->symbol());
+    ASSERT_EQ("67", args[1]->symbol());
 
 }
 
@@ -274,9 +274,9 @@ TEST(Parser, listOfTermsTwoNumbers) {
 TEST(ParserTest, parseStructOfStructAllTheWay2) {
     Scanner scanner("s(s(s(s(1)))), b(1,2,3)");
     Parser parser(scanner);
-    ASSERT_EQ("s(s(s(s(1))))", parser.createTerm()->symbol());
-    ASSERT_EQ(nullptr, parser.createTerm());
-    ASSERT_EQ("b(1, 2, 3)", parser.createTerm()->symbol());
+    vector<Term *> args = parser.getArgs();        
+    ASSERT_EQ("s(s(s(s(1))))", args[0]->symbol());
+    ASSERT_EQ("b(1, 2, 3)", args[1]->symbol());
 }
 
 // Given there is string: " 12345,  tom,   Date" in scanner.
@@ -285,13 +285,13 @@ TEST(ParserTest, parseStructOfStructAllTheWay2) {
 TEST(ParserTest, listOfTermsThree) {
     Scanner scanner(" 12345,  tom,   Date");
     Parser parser(scanner);
-    ASSERT_EQ("12345", parser.createTerm()->symbol());
-    ASSERT_EQ(nullptr, parser.createTerm());
-    ASSERT_EQ("tom", parser.createTerm()->symbol());
-    ASSERT_EQ(nullptr, parser.createTerm());
-    ASSERT_EQ("Date", parser.createTerm()->symbol());
+    vector<Term *> args = parser.getArgs();            
+    ASSERT_EQ("12345", args[0]->symbol());
+    ASSERT_EQ("tom", args[1]->symbol());
+    ASSERT_EQ("Date", args[2]->symbol());
 }
 
+/*
 TEST(ParserTest, parseStructOfStructAllTheWay3) {
     Scanner scanner("s(s(s(s(1)))), b(1,2,3), tom, X, 12.222");
     Parser parser(scanner);
@@ -307,5 +307,5 @@ TEST(ParserTest, parseStructOfStructAllTheWay3) {
     ASSERT_EQ(nullptr, parser.createTerm());
     
 }
-
+*/
 #endif

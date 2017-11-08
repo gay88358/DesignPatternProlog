@@ -12,7 +12,7 @@ using std::stack;
 
 class Scanner {
 public:
-    Scanner(string buffer);
+    Scanner(string buffer = "");
     bool isLegal();
     string buffer() const;
     int position()const;

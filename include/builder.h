@@ -16,9 +16,7 @@ using std::endl;
 class Builder {
 public:
     Builder();
-    Term* getTerm(Token *token);
-    virtual void buildTerm(Token *token);
-    virtual Term* getTerm();
+    
 protected:
     Term * _term;
     Global _g;
