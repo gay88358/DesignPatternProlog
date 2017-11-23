@@ -46,19 +46,7 @@ TEST(Node, expression3) { // X = 6; X = 5.
     ASSERT_EQ(true, expression->evaluate());
 }
 
-TEST(Node, expression4) { // X = 5, X = 6 ; X = 1. ----> true
-    Variable X("X");
-    Number five(5);
-    Number six(6);
-    Number one(1);
-    MatchExp m_exp1(new TermExp(&X), new TermExp(&six)); // X = 6
-    MatchExp m_exp2(new TermExp(&X), new TermExp( &five)); // X = 5
-    MatchExp m_exp3(new TermExp(&X), new TermExp(&one)); // X = 1
-    AndExp and_exp1(&m_exp1, &m_exp2);
-    OrExp or_exp1(&and_exp1, &m_exp3);
-    Node * expression =& or_exp1;
-    ASSERT_EQ(true, expression->evaluate());
-} 
+
 
 
 

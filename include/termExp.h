@@ -7,9 +7,7 @@
 class TermExp : public Node {
 public:
     TermExp(Term* term);
-    void interpret(string text);
     bool evaluate();
-    void clear();
 private:    
     Term *_term;
 };

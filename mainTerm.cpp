@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
-//#include "utTerm.h"
-//#include "utStruct.h"
-//#include "utVariable.h"
-//#include "utList.h"
-//#include "utScanner.h"
-//#include "utParser.h"
+#include "utTerm.h"
+#include "utStruct.h"
+#include "utVariable.h"
+#include "utList.h"
+#include "utScanner.h"
+#include "utParser.h"
 #include "utParser1.h"
-//#include "utNode.h"
+#include "utNode.h"
 int main( int argc , char **argv )
 {
     testing :: InitGoogleTest( &argc , argv ) ;
