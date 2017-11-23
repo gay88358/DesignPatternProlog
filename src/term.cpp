@@ -32,3 +32,14 @@ vector<Term*> Term::args() const {
     vector<Term*> v;
     return v;
 }
+
+void Term::clear() {
+    // do nothing
+}
+
+Term* Term::find(string symbol) {
+    if (this->_symbol == symbol) {
+        return this;
+    }
+    return NULL;
+}

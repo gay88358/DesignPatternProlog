@@ -27,6 +27,7 @@ public:
     Token* nextToken();
     bool isStructFormat();
     string extractDotStruct();
+    char peek();
 private:
     Global _global;
     string _buffer;

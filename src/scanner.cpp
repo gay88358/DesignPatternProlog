@@ -29,11 +29,18 @@ char Scanner::currentChar() {
     return this->_buffer[this->_position];
 }
 
+char Scanner::peek() {
+    int peek_pos = this->_position + 1;
+    if (peek_pos < this->_buffer.length())
+        return this->_buffer[peek_pos];
+    return ' ';
+}
+
 double Scanner::extractNumber() { // still can not prevent input from ilegal format
     // prevent extract term is not number
     // if (!isdigit(currentChar())) return -999.9;
     int begin = this->position();
-    while(isdigit(currentChar()) || currentChar() == '.') {
+    while(isdigit(currentChar()) || (currentChar() == '.' && isdigit(this->peek()) )) {
         this->_position++;
     }
     return stod(this->_buffer.substr(begin, this->_position - begin));
@@ -106,7 +113,7 @@ Token* Scanner::nextToken() {
         return new Token("EOS", _global.EOS);        
     } else if (currentChar() == '.' && isStructFormat()) {
         return new Token(extractDotStruct(), _global.ATOM);                
-    } else if (currentChar() == '=' || currentChar() == ',' || currentChar() == '.' || currentChar() == '(' || currentChar() == ')' || currentChar() == '[' || currentChar() == ']') {
+    } else if (currentChar() == ';' || currentChar() == '=' || currentChar() == ',' || currentChar() == '.' || currentChar() == '(' || currentChar() == ')' || currentChar() == '[' || currentChar() == ']') {
         char token = extractChar();
         int type = token;
         string value;

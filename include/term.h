@@ -8,6 +8,7 @@ using std::vector;
 
 class Term {
 public:
+    virtual void clear();
     virtual string symbol() const;    
     virtual string value() const;
     virtual bool match(Term &term);
@@ -15,6 +16,8 @@ public:
     virtual Term* name();
     virtual int argSize() const;
     virtual vector<Term*> args() const;
+
+    virtual Term* find(string symbol);
 protected:
     string _value;
     string _symbol;

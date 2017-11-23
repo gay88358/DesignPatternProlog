@@ -279,6 +279,15 @@ TEST(ParserTest, parseStructOfStructAllTheWay2) {
     ASSERT_EQ("b(1, 2, 3)", args[1]->symbol());
 }
 
+
+TEST(ParserTest, parseStructOfStructAllTheWay3) {
+    Scanner scanner("s(s(s(s(1)))), b(1,2,3)");
+    Parser parser(scanner);
+    ASSERT_EQ("s(s(s(s(1))))", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    ASSERT_EQ("b(1, 2, 3)", parser.createTerm()->symbol());
+}
+
 // Given there is string: " 12345,  tom,   Date" in scanner.
 // When parser parses all terms via scanner.
 // Then it should return three terms: "12345", "tom" and "Date".

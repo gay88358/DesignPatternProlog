@@ -125,22 +125,19 @@ TEST(Scanner, multiple_scan) {
 }
 
 
-/*
+
+
 TEST(Scanner, token) {
     Global g;
-    Scanner scanner("X = 5.1232, Y = X");
-    EXPECT_EQ(g.VAR, scanner.nextToken()->tokenType);
-    EXPECT_EQ("X", scanner.tokenValue()->tokenValue);
-    EXPECT_EQ(g.NUMBER, scanner.nextToken()->tokenType);
-    //EXPECT_EQ("=", scanner.tokenValue());
-    EXPECT_EQ(g.NUMBER, scanner.nextToken());
-    EXPECT_EQ("5.1232", scanner.tokenValue());
-    scanner.nextToken();
-    EXPECT_EQ(g.VAR, scanner.nextToken());
-    EXPECT_EQ("Y", scanner.tokenValue());
+    Scanner scanner("X = 5.");
+    EXPECT_EQ("X", scanner.nextToken()->tokenValue());
+    EXPECT_EQ("=", scanner.nextToken()->tokenValue());
+    EXPECT_EQ("5", scanner.nextToken()->tokenValue());
+    EXPECT_EQ(".", scanner.nextToken()->tokenValue());
+
 }
 
-
+/*
 TEST(Scanner, nextTokenChar) {
     //---------------01234
     Global g;

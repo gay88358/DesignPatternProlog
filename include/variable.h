@@ -13,6 +13,7 @@ public:
     string value() const;
     bool match(Term &term);
     bool isRepeat(vector<Term*>);
+    void clear();
 private:
     string head;
     vector<Term*> _path;

@@ -203,4 +203,14 @@ TEST(Struct, nested_struct_and_multiVariable)
 
 }
 
+TEST(Struct, find_var_in_struct) { // s(s(X)), find X
+    Variable X("X");
+    Struct s(Atom("s"), vector<Term*> { &X }); // s(X)
+    Struct s1(Atom("s"), vector<Term*> { &s }); // s(s(X))
+    ASSERT_TRUE(s1.find("X"));
+    Struct s2(Atom("s"), vector<Term*> { &s1 });
+    ASSERT_TRUE(s2.find("X"));
+    ASSERT_FALSE(s2.find("Y"));
+}
+
 #endif

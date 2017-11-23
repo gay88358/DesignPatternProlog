@@ -63,3 +63,15 @@ bool Struct::match(Term &term) {
         return term.match(*this);
     return assign;
 }
+
+
+Term* Struct::find(string symbol) {
+    vector<Term*> args = this->_args;
+    for (int i = 0; i < args.size(); i++) {
+        Term *find = args[i]->find(symbol);
+        if (find != NULL) {
+            return find;
+        }
+    }
+    return NULL;
+}

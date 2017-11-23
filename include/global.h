@@ -12,7 +12,12 @@ public:
     const int VAR = 259;
     const int LIST = 260;
     const int STRUCT = 261;
-
+    // prolog token 
+    char DOT = '.';
+    char CONJUNCTION = ',';
+    char DISJUNCTION = ';';
+    char MTACH = '=';
+    //
     char FORMER_PARENTHESES = '(';
     char LATTER_PARENTHESES = ')';
     char FORMER_BRACKET = '[';

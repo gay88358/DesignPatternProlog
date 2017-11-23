@@ -29,6 +29,10 @@ bool Variable::isRepeat(vector<Term*> targetPath) {
     return false;
 }
 
+void Variable::clear() {
+    this->_instance = NULL;
+}
+
 bool Variable::match(Term &term) { // match still has some problem in string compare like "" and so on
     /*if (_instance == NULL) {
         if (term.type() == "List") {

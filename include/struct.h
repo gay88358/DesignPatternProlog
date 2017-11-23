@@ -20,6 +20,9 @@ public:
     int argSize() const;
     vector<Term*> args() const;
     bool match(Term &term);
+    
+    Term* find(string symbol);
+
 protected:
     Atom _name;
     vector<Term*> _args;
