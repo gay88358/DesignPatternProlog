@@ -188,9 +188,6 @@ TEST(List, matchVarinListToAtomShouldSucceed) {
     ASSERT_EQ("alan_mathison_turing", X.value());    
     ASSERT_EQ("[496, alan_mathison_turing, terence_tao]", Y.value());
 }
-
-
-
 // Example: 
 // ?- [first, second, third] = [H|T].
 // H = first, T = [second, third].
@@ -226,7 +223,6 @@ TEST(List, headAndTailMatching3) {
     List l1(args);
     vector<Term *> args2 = {&l1, &s, &t};
     List l2(args2);
-
     EXPECT_EQ("[first]", l2.head()->value());
     EXPECT_EQ("[second, third]", l2.tail()->value());
 
