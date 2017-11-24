@@ -1,477 +1,320 @@
 #ifndef UTPARSER_H
 #define UTPARSER_H
 
-#include <string>
-
 #include "./include/parser.h"
 #include "./include/scanner.h"
 #include "./include/term.h"
 #include "./include/list.h"
 #include "./include/variable.h"
 #include "./include/number.h"
-#include "./include/node.h"
-#include "./include/global.h"
 
-class ParserTest : public ::testing::Test {
-protected:
-  void SetUp() {
-  }
-};
-
-TEST_F(ParserTest, createTerm_Var){
-  Scanner scanner("X");
-  Parser parser(scanner);
-  ASSERT_EQ("X", parser.createTerm()->symbol());
+TEST(Parser, createTerm_Var){
+    Scanner scanner("X");
+    Parser parser(scanner);
+    ASSERT_EQ("X", parser.createTerm()->symbol());    
 }
 
-TEST_F(ParserTest, createTerm_Num){
+TEST(Parser, createTerm_Num){
   Scanner scanner("123");
   Parser parser(scanner);
   ASSERT_EQ("123", parser.createTerm()->symbol());
 }
 
-TEST_F(ParserTest, createTerm_Atom)
+TEST(Parser, createTerm_Atom)
 {
   Scanner scanner("tom");
   Parser parser(scanner);
   ASSERT_EQ("tom", parser.createTerm()->symbol());
 }
 
-TEST_F(ParserTest, createTerm_Struct)
-{
-  Scanner scanner("s(1, X, tom)");
-  Parser parser(scanner);
-  Term * term = parser.createTerm();
-  ASSERT_NE(nullptr, term);
-  ASSERT_EQ("s(1, X, tom)", term->symbol());
-}
-
-TEST_F(ParserTest, createArgs)
+TEST(Parser, createArgs)
 {
   Scanner scanner("1, X, tom");
   Parser parser(scanner);
-  parser.createTerms();
-  vector<Term*> terms = parser.getTerms();
+  vector<Term*> terms = parser.getArgs();
   ASSERT_EQ("1", terms[0]->symbol());
   ASSERT_EQ("X", terms[1]->symbol());
   ASSERT_EQ("tom", terms[2]->symbol());
 }
 
-TEST_F(ParserTest,ListOfTermsEmpty)
+TEST(Parser, createArgs_two)
 {
-  Scanner scanner;
+  Scanner scanner("1, X");
   Parser parser(scanner);
-  parser.createTerms();
-  vector<Term*> terms = parser.getTerms();
-  ASSERT_EQ(0,terms.size());
+  vector<Term*> terms = parser.getArgs();
+  ASSERT_EQ("1", terms[0]->symbol());
+  ASSERT_EQ("X", terms[1]->symbol());
 }
 
-TEST_F(ParserTest, createTerm_underscoredVar)
+TEST(Parser, createArgs_one)
 {
-  Scanner scanner("_date");
+  Scanner scanner("1");
   Parser parser(scanner);
-  ASSERT_EQ("_date", parser.createTerm()->symbol());
+  vector<Term*> terms = parser.getArgs();
+  ASSERT_EQ("1", terms[0]->symbol());
 }
 
-TEST_F(ParserTest,listofTermsTwoNumber)
+TEST(Parser, createTerms)
 {
-  Scanner scanner("12345 , 68");
+  Scanner scanner("s(1, X, tom)");
   Parser parser(scanner);
-  parser.createTerms();
-  vector<Term*> terms = parser.getTerms();
-  ASSERT_EQ("12345" , terms[0]->symbol());
-  ASSERT_EQ("68" , terms[1]->symbol());
+  ASSERT_EQ("s(1, X, tom)", parser.createTerm()->symbol());
 }
 
-TEST_F(ParserTest, createTerm_StructWithoutArgs) {
-  Scanner scanner("point()");
-  Parser parser(scanner);
-  EXPECT_EQ("point()",parser.createTerm()->symbol());
+// Given there is string: "point(1, X, z(1,2,3))" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a Struct.
+// And #symbol() of Strcut should return "point(1, X, z(1,2,3))".
+TEST(Parser, parseStructOfStruct) {
+    Scanner scanner("point(1, X, z(1,2,3))");
+    Parser parser(scanner);
+    ASSERT_EQ("point(1, X, z(1, 2, 3))", parser.createTerm()->symbol());
+    
 }
 
-TEST_F(ParserTest, createTerm_StructWithNumber) {
-  Scanner scanner("point(11)");
-  Parser parser(scanner);
-  EXPECT_EQ("point(11)",parser.createTerm()->symbol());
+// Given there is string: "s(s(s(s(1))))" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a Struct.
+// And #symbol() of Strcut should return "s(s(s(s(1))))".
+TEST(Parser, parseStructOfStructAllTheWay) {
+    Scanner scanner("s(s(s(s(1))))");
+    Parser parser(scanner);
+    ASSERT_EQ("s(s(s(s(1))))", parser.createTerm()->symbol());
+    
 }
 
-TEST_F(ParserTest, createTerm_StructWithTwoNumber) {
-  Scanner scanner("point(11,12)");
-  Parser parser(scanner);
-  EXPECT_EQ("point(11, 12)",parser.createTerm()->symbol());
+// Given there is string: "point(1, X, z)" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a Struct.
+// And #symbol() of Strcut should return "point(1, X, z)".
+TEST(Parser, parseStructThreeArgs) {
+    Scanner scanner("point(1, X, z)");
+    Parser parser(scanner);
+    ASSERT_EQ("point(1, X, z)", parser.createTerm()->symbol());
+ 
 }
 
-TEST_F(ParserTest, createTerm_StructWithThreeTerms) {
-  Scanner scanner("point(1, X, z)");
-  Parser parser(scanner);
-  EXPECT_EQ("point(1, X, z)",parser.createTerm()->symbol());
-}
-
-TEST_F( ParserTest, createTerm_StructWithStruct){
-  Scanner scanner( "point(1, X, z(1,2,3))");
-  Parser parser( scanner );
-  ASSERT_EQ( "point(1, X, z(1, 2, 3))", parser.createTerm()->symbol());
-}
-
-TEST_F(ParserTest, createTerm_nestedStruct)
-{
-  Scanner scanner("s(s(1))");
-  Parser parser(scanner);
-  ASSERT_EQ("s(s(1))", parser.createTerm()->symbol());
-}
-
-TEST_F( ParserTest, createTerm_nestedStruct2){
-  Scanner scanner( "s(s(s(s(1))))");
-  Parser parser( scanner );
-  ASSERT_EQ( "s(s(s(s(1))))", parser.createTerm()->symbol());
-}
-
-TEST_F(ParserTest, createTerm_nestedStruct3) {
-  Scanner scanner("s(s(s(s(1)))), b(1,2,3)");
-  Parser parser(scanner);
-  parser.createTerms();
-  vector<Term*> terms = parser.getTerms();
-  EXPECT_EQ(2, terms.size());
-  EXPECT_EQ("s(s(s(s(1))))",terms[0]->symbol());
-  EXPECT_EQ("b(1, 2, 3)",terms[1]->symbol());
-}
-
-TEST_F(ParserTest, createTerm_DotStruct){
-  Scanner scanner("...(11,12)");
-  Parser parser( scanner );
-  ASSERT_EQ( "...(11, 12)", parser.createTerm()->symbol());
-}
-
-TEST_F(ParserTest, createTerm_emptyList){
-  Scanner scanner("   [   ]");
-  Parser parser( scanner );
-  ASSERT_EQ( "[]", parser.createTerm()->symbol());
-}
-
-TEST_F(ParserTest, createTerm_listWithTwoTerms){
-  Scanner scanner("   [1, 2]");
-  Parser parser( scanner );
-  ASSERT_EQ( "[1, 2]", parser.createTerm()->symbol());
-}
-
-TEST_F(ParserTest, createTerm_nestedList){
-  Scanner scanner("   [  [1], [] ]");
-  Parser parser( scanner );
-  ASSERT_EQ( "[[1], []]", parser.createTerm()->symbol());
-}
-
-TEST_F(ParserTest, createTerm_ListOfListAndStruct){
-  Scanner scanner("   [  [1], [], s(s(1)) ]   ");
-  Parser parser( scanner );
-  ASSERT_EQ( "[[1], [], s(s(1))]", parser.createTerm()->symbol());
-}
-
-TEST_F(ParserTest, createTerm_illeageTerm){
-  Scanner scanner("[1,2)");
-  Parser parser( scanner );
-  try {
-    parser.createTerm();
-    ASSERT_TRUE(false) << "It should throw a string; \"unexpected token\" as exception.";
-  } catch (std::string exception) {
-    EXPECT_EQ(exception, std::string("unexpected token"));
-  }
-}
-
-TEST_F(ParserTest, createTerm_ListAsStruct) {
-  Scanner scanner(".(1,[])");
-  Parser parser(scanner);
-  Term* term = parser.createTerm();
-  EXPECT_EQ(".(1, [])", term->symbol());
-  EXPECT_EQ(2, ((Struct *) term)->arity());
-  Number * n = dynamic_cast<Number *>(((Struct *) term)->args(0));
-  EXPECT_EQ("1", n->symbol());
-  List * l = dynamic_cast<List *>(((Struct *) term)->args(1));
-  EXPECT_EQ("[]", l->symbol());
-}
-
-TEST_F(ParserTest, createTerm_ListAsStruct2) {
-  Scanner scanner(".(2,.(1,[]))");
-  Parser parser(scanner);
-  Term* term = parser.createTerm();
-  EXPECT_EQ(".(2, .(1, []))", term->symbol());
-  EXPECT_EQ(2, ((Struct *) term)->arity());
-  Number * n = dynamic_cast<Number *>(((Struct *) term)->args(0));
-  EXPECT_EQ("2", n->symbol());
-  Struct * s = dynamic_cast<Struct *>(((Struct *) term)->args(1));
-  EXPECT_EQ(".(1, [])", s->symbol());
-}
-
-TEST_F(ParserTest, OneMatching) {
-  Scanner scanner("X=1.");
-  Parser parser(scanner);
-  
-  parser.matchings();
-  vector<Term *> terms = parser.getTerms();
-  EXPECT_EQ(2, terms.size());
-  EXPECT_EQ("X", terms[0]->symbol());
-  EXPECT_EQ("1", terms[1]->symbol());
-  EXPECT_NE("1", terms[0]->value());
-
-  Node * et = parser.expressionTree();
-  EXPECT_EQ("=", et->payload);
-
-  EXPECT_TRUE(et->evaluate());
-  EXPECT_EQ("1", terms[0]->value());
-  
-}
-
-TEST_F(ParserTest, OneMatchingFalse) {
-  Scanner scanner("1=2.");
-  Parser parser(scanner);
-  EXPECT_NO_THROW(parser.matchings());
-  vector<Term *> terms = parser.getTerms();
-  EXPECT_EQ(2, terms.size());
-  EXPECT_EQ("1", terms[0]->symbol());
-  EXPECT_EQ("2", terms[1]->symbol());
-
-  Node * et = parser.expressionTree();
-  EXPECT_FALSE(et->evaluate());
-}
-
-TEST_F(ParserTest, TwoTermsMatching) {
-  Global g;
-  Scanner scanner("X=1, Y=2.");
-  Parser parser(scanner);
-  parser.matchings();
-  vector<Term *> terms = parser.getTerms();
-  EXPECT_EQ(4, terms.size());
-  EXPECT_EQ("X", terms[0]->symbol());
-  EXPECT_EQ("1", terms[1]->symbol());
-  EXPECT_EQ("Y", terms[2]->symbol());
-  EXPECT_EQ("2", terms[3]->symbol());
-  //EXPECT_EQ("X", symtable[0].first);
-  //EXPECT_EQ("Y", symtable[1].first);
-
-  Node * et = parser.expressionTree();
-  EXPECT_TRUE(et->evaluate());
-  EXPECT_EQ(",", et->payload);
-
-  EXPECT_EQ("1", terms[0]->value());
-  EXPECT_EQ("2", terms[2]->value());
-}
-
-TEST_F(ParserTest, ThreeTermsMatching) {
-  Scanner scanner("X=1, Y=2, Z=3.");
-  Parser parser(scanner);
-  parser.matchings();
-  vector<Term *> terms = parser.getTerms();
-  EXPECT_EQ(6, terms.size());
-  EXPECT_EQ("X", terms[0]->symbol());
-  EXPECT_EQ("1", terms[1]->symbol());
-  EXPECT_EQ("Y", terms[2]->symbol());
-  EXPECT_EQ("2", terms[3]->symbol());
-  //EXPECT_EQ("X", symtable[0].first);
-  //EXPECT_EQ("Y", symtable[1].first);
-
-  Node * et = parser.expressionTree();
-  EXPECT_TRUE(et->evaluate());
-  EXPECT_EQ(",", et->payload);
-  EXPECT_EQ("=", et->left->payload);
-  EXPECT_EQ(",", et->right->payload);
-  EXPECT_EQ("=", et->right->left->payload);
-  EXPECT_EQ("=", et->right->right->payload);
-
-  EXPECT_EQ("1", terms[0]->value());
-  EXPECT_EQ("2", terms[2]->value());
-  EXPECT_EQ("3", terms[4]->value());
+// Given there is string: "_date" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a Variable.
+// And #symbol() of Variable should return "_date".
+TEST(Parser, parseVar) {
+    Scanner scanner("_date");
+    Parser parser(scanner);
+    ASSERT_EQ("_date", parser.createTerm()->symbol());
 
 }
 
-TEST_F(ParserTest, TwoVariableMatching2) {
-  Scanner scanner("X=1, X=Y.");
-  Parser parser(scanner);
-  parser.matchings();
-  vector<Term *> terms = parser.getTerms();
-  EXPECT_EQ(4, terms.size());
-  EXPECT_EQ("X", terms[0]->symbol());
-  EXPECT_EQ("1", terms[1]->symbol());
-  EXPECT_EQ("X", terms[2]->symbol());
-  EXPECT_EQ("Y", terms[3]->symbol());
-  //EXPECT_EQ("X", symtable[0].first);
-  //EXPECT_EQ("Y", symtable[1].first);
-
-  Node * et = parser.expressionTree();
-  EXPECT_TRUE(et->evaluate());
-
-  EXPECT_EQ("1", terms[0]->value());
-  EXPECT_EQ("1", terms[1]->value());
-  EXPECT_EQ("1", terms[3]->value());
+// Given there is string: "point()" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a Struct.
+// And #symbol() of Strcut should return "point()".
+TEST(Parser, parseStructNoArg) {
+    Scanner scanner("point()");
+    Parser parser(scanner);
+    //ASSERT_EQ(nullptr, parser.createTerm());
+    ASSERT_EQ("point()", parser.createTerm()->symbol());
 }
 
-TEST_F(ParserTest, TwoVariableMatching3) {
-  Scanner scanner("X=Y, X=1.");
-  Parser parser(scanner);
-  parser.matchings();
-  vector<Term *> terms = parser.getTerms();
-  EXPECT_EQ(4, terms.size());
-  EXPECT_EQ("X", terms[0]->symbol());
-  EXPECT_EQ("Y", terms[1]->symbol());
-  EXPECT_EQ("X", terms[2]->symbol());
-  EXPECT_EQ("1", terms[3]->symbol());
-  //EXPECT_EQ("X", symtable[0].first);
-  //EXPECT_EQ("Y", symtable[1].first);
+// Given there is string: "   [   ]" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a List.
+// And #symbol() of List should return "[]".
+TEST(Parser, parseListEmpty) {
+    Scanner scanner("   [   ]");
+    Parser parser(scanner);
+    ASSERT_EQ("[]", parser.createTerm()->symbol());
+}
 
-  Node * et = parser.expressionTree();
-  EXPECT_TRUE(et->evaluate());
+// Given there is string: "   [  [1], [] ]" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a List.
+// And #symbol() of List should return "[[1], []]".
+TEST(Parser, parseListOfLists) {
+    Scanner scanner("   [  [1], [] ]");
+    Parser parser(scanner);
+    ASSERT_EQ("[[1], []]", parser.createTerm()->symbol());
+}
 
-  EXPECT_EQ("1", terms[0]->value());
-  EXPECT_EQ("1", terms[1]->value());
+// Given there is string: "point(11)" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a Struct.
+// And #symbol() of Strcut should return "point(11)".
+TEST(Parser, parseStructOneArg) {
+    Scanner scanner("point(11)");
+    Parser parser(scanner);
+    ASSERT_EQ("point(11)", parser.createTerm()->symbol());
+}
+
+// Given there is string: "point(11,12)" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a Struct.
+// And #symbol() of Strcut should return "point(11, 12)".
+TEST(Parser, parseStructTwoArgs) {
+    Scanner scanner("point(11,12)");
+    Parser parser(scanner);
+    ASSERT_EQ("point(11, 12)", parser.createTerm()->symbol());
+}
+
+// Given there is string: "   [  [1], [], s(s(1)) ]   " in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a List.
+// And #symbol() of List should return "[[1], [], s(s(1))]".
+TEST(Parser, parseListOfListsAndStruct) {
+    Scanner scanner("   [  [1], [], s(s(1)) ]   ");
+    Parser parser(scanner);
+    ASSERT_EQ("[[1], [], s(s(1))]", parser.createTerm()->symbol());
+}
+
+// Given there is string: "   [1, 2]" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a List.
+// And #symbol() of List should return "[1, 2]".
+TEST(Parser, parseList) {
+    Scanner scanner("   [1, 2]");
+    Parser parser(scanner);
+    ASSERT_EQ("[1, 2]", parser.createTerm()->symbol());
+}
+
+// Given there is string: "...(11,12)" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a Struct.
+// And #symbol() of Strcut should return "...(11, 12)".
+TEST(Parser, parseStructDOTSTwoArgs) {
+    Scanner scanner("...(11,12)");
+    Parser parser(scanner);
+    ASSERT_EQ("...(11, 12)", parser.createTerm()->symbol());
+}
+
+// Given there is string: ".(2,.(1,[]))" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a Struct which contains two terms.
+// And #arity() of the Struct should be 2.
+// And #symbol() of Struct should return ".(2, .(1, []))"
+// And the first term should be number: "2", the second term should be another Strcut: ".(1, [])".
+TEST(Parser, ListAsStruct2) {
+    Scanner scanner(".(2,.(1,[]))");
+    Parser parser(scanner);
+    Struct *s = dynamic_cast<Struct *>(parser.createTerm());
+    ASSERT_EQ(2, s->arity());
+    ASSERT_EQ(".(2, .(1, []))", s->symbol());
+    ASSERT_EQ("2", s->args(0)->symbol());
+    ASSERT_EQ(".(1, [])", s->args(1)->symbol());
+}
+
+// Given there is string: ".(1,[])" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a Struct which contains two terms.
+// And #arity() of the Struct should be 2.
+// And #symbol() of Struct should return ".(1, [])".
+// And the first term should be number: "1", the second term should be another List: "[]".
+TEST(Parser, ListAsStruct) {
+    Scanner scanner(".(1,[])");
+    Parser parser(scanner);
+    Struct *s = dynamic_cast<Struct *>(parser.createTerm());
+    ASSERT_EQ(2, s->arity());
+    ASSERT_EQ(".(1, [])", s->symbol());
+    ASSERT_EQ("1", s->args(0)->symbol());
+    ASSERT_EQ("[]", s->args(1)->symbol());
+}
+
+// Given there is not string in scanner.
+// When parser parses all terms via scanner.
+// Then it should return nothing.
+TEST(Parser, listOfTermsEmpty) {
+    Scanner scanner;
+    Parser parser(scanner);
+    ASSERT_EQ(nullptr, parser.createTerm());
+}
+
+// Given there is string: "[1,2)" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return a string: "unexpected token" as exception.
+TEST(Parser, illegal1) {
+    Scanner scanner("[1,2)");
+    Parser parser(scanner);
+    try{
+        parser.createTerm();
+    }catch(string s){
+        EXPECT_EQ("unexpected token", s);
+    }
+}
+    
+// Given there is string: " 12345,  tom" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return two terms, one is "12345", another is "tom".
+TEST(Parser, listOfTermsTwo) {
+    Scanner scanner(" 12345,  tom");
+    Parser parser(scanner);
+    vector<Term *> args = parser.getArgs();
+    ASSERT_EQ("12345", args[0]->symbol());
+    ASSERT_EQ("tom", args[1]->symbol());
 }
 
 
-TEST_F(ParserTest, VarAStructOfVar) {
-  Scanner scanner("X=s(Y).");
-  Parser parser(scanner);
-  parser.matchings();
 
-  vector<Term *> terms = parser.getTerms();
-  EXPECT_EQ(2, terms.size());
 
-  EXPECT_EQ("X", terms[0]->symbol());
-  EXPECT_EQ("X", terms[0]->value());
-  EXPECT_EQ("s(Y)", terms[1]->symbol());
+// Given there is string: " 12345,  67" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return two terms, one is "12345", another is "67".
+TEST(Parser, listOfTermsTwoNumbers) {
+    Scanner scanner(" 12345,  67");
+    Parser parser(scanner);
+    vector<Term *> args = parser.getArgs();    
+    ASSERT_EQ("12345", args[0]->symbol());
+    ASSERT_EQ("67", args[1]->symbol());
 
-  //EXPECT_EQ("X", symtable[0].first);
-  //EXPECT_EQ("s", symtable[1].first);
-  //EXPECT_EQ("Y", symtable[2].first);
-  //EXPECT_EQ(3, symtable.size());
-
-  Node * et = parser.expressionTree();
-  EXPECT_EQ("=", et->payload);
-  EXPECT_EQ("TERM", et->left->payload);
-  EXPECT_EQ("TERM", et->right->payload);
-  EXPECT_EQ("X", et->left->term->symbol());
-  EXPECT_EQ("s(Y)", et->right->term->symbol());
-  EXPECT_TRUE(et->evaluate());
 }
 
-TEST_F(ParserTest, TwoVariableMatching4) {
-  Scanner scanner("X=s(Y), Y=1.");
-  Parser parser(scanner);
-  parser.matchings();
-  vector<Term *> terms = parser.getTerms();
-  EXPECT_EQ(4, terms.size());
-  EXPECT_EQ("X", terms[0]->symbol());
-  EXPECT_EQ("X", terms[0]->value());
-  EXPECT_EQ("s(Y)", terms[1]->symbol());
-  EXPECT_EQ("Y", terms[2]->symbol());
-  EXPECT_EQ("1", terms[3]->symbol());
-  //EXPECT_EQ("X", symtable[0].first);
-  //EXPECT_EQ("s", symtable[1].first);
-  //EXPECT_EQ("Y", symtable[2].first);
-  //EXPECT_EQ(3, symtable.size());
-
-  Node * et = parser.expressionTree();
-  EXPECT_TRUE(et->evaluate());
-  EXPECT_EQ(",", et->payload);
-  EXPECT_EQ("=", et->left->payload);
-  EXPECT_EQ("X", et->left->left->term->symbol());
-  EXPECT_EQ("s(Y)", et->left->right->term->symbol());
-  EXPECT_EQ("s(Y)", terms[1]->symbol());
-  EXPECT_EQ("=", et->right->payload);
-  EXPECT_EQ("Y", et->right->left->term->symbol());
-  EXPECT_EQ("1", et->right->right->term->symbol());
-
-  EXPECT_EQ("X", terms[0]->symbol());
-  EXPECT_EQ("s(1)", terms[0]->value());
-  EXPECT_EQ("s(1)", terms[1]->value());
-  EXPECT_EQ("Y", terms[2]->symbol());
-  EXPECT_EQ("1", terms[2]->value());
+// Given there is string: "s(s(s(s(1)))), b(1,2,3)" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return two Struct.
+// And #symbol() of the first Strcut should return "s(s(s(s(1))))".
+// And #symbol() of the second Strcut should return "b(1, 2, 3)".
+TEST(ParserTest, parseStructOfStructAllTheWay2) {
+    Scanner scanner("s(s(s(s(1)))), b(1,2,3)");
+    Parser parser(scanner);
+    vector<Term *> args = parser.getArgs();        
+    ASSERT_EQ("s(s(s(s(1))))", args[0]->symbol());
+    ASSERT_EQ("b(1, 2, 3)", args[1]->symbol());
 }
 
-TEST_F(ParserTest, ConjTwoMatchingFailure) {
-  Scanner scanner("X=1, X=2.");
-  Parser parser(scanner);
-  parser.matchings();
-  vector<Term *> terms = parser.getTerms();
-  EXPECT_EQ(4, terms.size());
-  EXPECT_EQ("X", terms[0]->symbol());
-  EXPECT_EQ("1", terms[1]->symbol());
-  EXPECT_EQ("X", terms[2]->symbol());
-  EXPECT_EQ("2", terms[3]->symbol());
-  //EXPECT_EQ("X", symtable[0].first);
 
-  Node * et = parser.expressionTree();
-  EXPECT_EQ(",", et->payload);
-  EXPECT_EQ("=", et->left->payload);
-  EXPECT_EQ("=", et->right->payload);
-  EXPECT_EQ("X", et->left->left->term->symbol());
-  EXPECT_EQ("1", et->left->right->term->symbol());
-  EXPECT_EQ("X", et->right->left->term->symbol());
-  EXPECT_EQ("2", et->right->right->term->symbol());
-
-  EXPECT_FALSE(et->evaluate());
+TEST(ParserTest, parseStructOfStructAllTheWay3) {
+    Scanner scanner("s(s(s(s(1)))), b(1,2,3)");
+    Parser parser(scanner);
+    ASSERT_EQ("s(s(s(s(1))))", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    ASSERT_EQ("b(1, 2, 3)", parser.createTerm()->symbol());
 }
 
-TEST_F(ParserTest, DisjTwoMatchingSuccess) {
-  Scanner scanner("X=1; X=2.");
-  Parser parser(scanner);
-  parser.matchings();
-  vector<Term *> terms = parser.getTerms();
-  EXPECT_EQ(4, terms.size());
-  EXPECT_EQ("X", terms[0]->symbol());
-  EXPECT_EQ("1", terms[1]->symbol());
-  EXPECT_EQ("X", terms[2]->symbol());
-  EXPECT_EQ("2", terms[3]->symbol());
-  //EXPECT_EQ("X", symtable[0].first);
-
-  Node * et = parser.expressionTree();
-  EXPECT_EQ(";", et->payload);
-  EXPECT_EQ("=", et->left->payload);
-  EXPECT_EQ("=", et->right->payload);
-  EXPECT_EQ("X", et->left->left->term->symbol());
-  EXPECT_EQ("1", et->left->right->term->symbol());
-  EXPECT_EQ("X", et->right->left->term->symbol());
-  EXPECT_EQ("2", et->right->right->term->symbol());
-
-  EXPECT_TRUE(et->evaluate());
-
-  EXPECT_EQ("1", terms[0]->value());
-  EXPECT_EQ("2", terms[2]->value());
+// Given there is string: " 12345,  tom,   Date" in scanner.
+// When parser parses all terms via scanner.
+// Then it should return three terms: "12345", "tom" and "Date".
+TEST(ParserTest, listOfTermsThree) {
+    Scanner scanner(" 12345,  tom,   Date");
+    Parser parser(scanner);
+    vector<Term *> args = parser.getArgs();            
+    ASSERT_EQ("12345", args[0]->symbol());
+    ASSERT_EQ("tom", args[1]->symbol());
+    ASSERT_EQ("Date", args[2]->symbol());
 }
 
-TEST_F(ParserTest, MatchingSuccess1) {
-  Scanner scanner("X=1; X=2, Y=s(X).");
-  Parser parser(scanner);
-  parser.matchings();
-  vector<Term *> terms = parser.getTerms();
-  Node * et = parser.expressionTree();
-  EXPECT_TRUE(et->evaluate());
-
-  EXPECT_EQ("1", terms[0]->value());
-  EXPECT_EQ("2", terms[2]->value());
-  EXPECT_EQ("s(2)", terms[4]->value());
+/*
+TEST(ParserTest, parseStructOfStructAllTheWay3) {
+    Scanner scanner("s(s(s(s(1)))), b(1,2,3), tom, X, 12.222");
+    Parser parser(scanner);
+    ASSERT_EQ("s(s(s(s(1))))", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    ASSERT_EQ("b(1, 2, 3)", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    ASSERT_EQ("tom", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    ASSERT_EQ("X", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    ASSERT_EQ("12.222", parser.createTerm()->symbol());
+    ASSERT_EQ(nullptr, parser.createTerm());
+    
 }
-
-TEST_F(ParserTest, MatchingSuccess2) {
-  Scanner scanner("X=1; X=2, Y=s(s(X, X)).");
-  Parser parser(scanner);
-  parser.matchings();
-  vector<Term *> terms = parser.getTerms();
-  Node * et = parser.expressionTree();
-  EXPECT_TRUE(et->evaluate());
-
-  EXPECT_EQ("1", terms[0]->value());
-  EXPECT_EQ("2", terms[2]->value());
-  EXPECT_EQ("s(s(2, 2))", terms[4]->value());
-}
-
-TEST_F(ParserTest, MatchingSuccess3) {
-  Scanner scanner("Y= s(s(X)), X = 1.");
-  Parser parser(scanner);
-  parser.matchings();
-  vector<Term *> terms = parser.getTerms();
-
-  Node * et = parser.expressionTree();
-  EXPECT_TRUE(et->evaluate());
-
-  EXPECT_EQ("s(s(1))", terms[1]->value());
-  EXPECT_EQ("1", terms[2]->value());
-}
-
+*/
 #endif
