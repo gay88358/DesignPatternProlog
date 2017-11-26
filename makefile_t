@@ -1,0 +1,39 @@
+CXX      = g++
+CPPFLAGS = -std=gnu++0x
+INC_DIR  = include
+SRC      = src
+TARGET   = hw6
+OBJECTS  = number.o variable.o atom.o struct.o term.o list.o scanner.o token.o builder.o parser.o node.o matchExp.o andExp.o orExp.o termExp.o
+UTEST    = $(utest *.h) $(./ *.h)
+
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS) mainTerm.o
+ifeq (${OS}, Windows_NT) 
+	$(CXX) -o $(TARGET) $(OBJECTS) mainTerm.o -lgtest
+else
+	$(CXX) -o $(TARGET) $(OBJECTS) mainTerm.o -lgtest -lpthread
+endif
+
+$(OBJECTS): %.o: $(SRC)/%.cpp $(INC_DIR)/%.h
+	$(CXX) $(CPPFLAGS) -c $<
+
+	
+mainTerm.o: mainTerm.cpp $(UTEST)
+	$(CXX) $(CPPFLAGS) -c mainTerm.cpp
+
+
+clean:	
+ifeq (${OS}, Windows_NT) 
+	del *.o *.exe
+else
+	rm -f *.o $(TARGET)
+endif
+
+
+test:
+	make clean
+	make
+	./$(TARGET)
+	make clean
