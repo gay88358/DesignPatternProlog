@@ -78,8 +78,6 @@ TEST(List, matchToAtomShouldFail) {
     ASSERT_FALSE(tom.match(l));
 }
 
-
-
 // ?- 8128 = [496, X, terence_tao].
 // false.
 TEST(List, matchToNumberShouldFail) {
@@ -91,8 +89,6 @@ TEST(List, matchToNumberShouldFail) {
     List l(v);
     ASSERT_FALSE(n1.match(l));
 }
-
-
 // ?- s(X) = [496, X, terence_tao].
 // false.
 TEST(List, matchToStructShouldFail) {
