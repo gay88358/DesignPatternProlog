@@ -1,5 +1,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
+#include <string>
+using std::string;
 
 class Global {
 public:
@@ -22,6 +24,12 @@ public:
     char LATTER_PARENTHESES = ')';
     char FORMER_BRACKET = '[';
     char LATTER_BRACKET = ']';
+
+
+    const string EQUALITY = "=";
+    const string COMMA = ",";
+    const string SEMICOLON = ";";
+    const string TERM = "TERM";
 
     bool isSpecialCh(char c) {
         return c == '+'

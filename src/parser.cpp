@@ -37,7 +37,6 @@ Term* Parser::createTerm() {
         return NULL;
 }
 
-
 Term* Parser::isSameTerm(Term *term) {
     for (int i = 0; i < this->_tempTerms.size(); i++) {
         Term *findTerm = this->_tempTerms[i]->find(term->symbol());
