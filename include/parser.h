@@ -18,6 +18,7 @@
 #include "./orExp.h"
 #include "./andExp.h"
 #include "./termExp.h"
+#include "./flyWeight.h"
 #include <stack>         
 
 using std::stack;
@@ -37,8 +38,6 @@ public:
     Node* factor();
     Node* term();
     Node* expressionTree();
-    void transFromTempToTerms();
-    Term* isSameTerm(Term *term);
 private:
     vector<Term *> _terms;
     vector<Term *> _tempTerms;
@@ -47,6 +46,7 @@ private:
     Global _g;
     Builder* _builder;
     Node * _expTree;
+    FlyWeight* _fly;
 };
 
 #endif

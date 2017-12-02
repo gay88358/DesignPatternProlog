@@ -75,3 +75,5 @@ Term* Struct::find(string symbol) {
     }
     return NULL;
 }
+
+

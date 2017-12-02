@@ -2,6 +2,9 @@
 #define TERM_H
 
 #include <string>
+#include "./iterator.h"
+#include "./nullIterator.h"
+//#include "./bfsIterator.h"
 #include <vector>
 using std::string;
 using std::vector;
@@ -16,7 +19,11 @@ public:
     virtual Term* name();
     virtual int argSize() const;
     virtual vector<Term*> args() const;
+    virtual Iterator* createIterator();
 
+    virtual Iterator* createDFSIterator();
+    virtual Iterator* createBFSIterator();
+    
     virtual Term* find(string symbol);
 protected:
     string _value;

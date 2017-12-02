@@ -1,4 +1,5 @@
 #include "../include/list.h"
+
 #include <iostream>
 
 List::List (): _elements() { // default constructor
@@ -68,3 +69,4 @@ List * List::tail() {
     vector<Term*>::iterator l = this->_elements.end();
     return new List(vector<Term *>(f, l));
 }
+

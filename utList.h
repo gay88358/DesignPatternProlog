@@ -263,7 +263,4 @@ TEST (List, emptyExecptionOfTail) {
     }
 }
 
-
-
-
 #endif

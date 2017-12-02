@@ -32,6 +32,8 @@
         "istream": "cpp",
         "__bit_reference": "cpp",
         "__string": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "random": "cpp",
+        "queue": "cpp"
     }
 }

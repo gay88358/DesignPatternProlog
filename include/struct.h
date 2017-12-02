@@ -4,11 +4,12 @@
 #include <string>
 #include <vector>
 
-#include "./term.h"
 #include "./atom.h"
+#include "./iterator.h"
 using std::string;
 using std::vector;
 
+class Term;
 class Struct : public Term {
 public:
     Struct(Atom name, vector<Term*> args);
@@ -22,7 +23,6 @@ public:
     bool match(Term &term);
     
     Term* find(string symbol);
-
 protected:
     Atom _name;
     vector<Term*> _args;

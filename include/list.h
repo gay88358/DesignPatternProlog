@@ -13,6 +13,7 @@ public:
   bool match(Term & term);
   int argSize() const;
   vector<Term*> args() const;
+
 public:
   List ();
   List (vector<Term *> const & elements);

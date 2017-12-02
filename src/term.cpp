@@ -1,5 +1,8 @@
 #include "../include/term.h"
 #include "../include/variable.h"
+#include "../include/dfsIterator.h"
+#include "../include/bfsIterator.h"
+
 #include <iostream>
 
 string Term::symbol() const {
@@ -37,9 +40,22 @@ void Term::clear() {
     // do nothing
 }
 
+Iterator* Term::createDFSIterator() {
+    return new DFSIterator(this);
+}
+
+Iterator* Term::createBFSIterator() {
+    return new BFSIterator(this);
+}
+
+
 Term* Term::find(string symbol) {
     if (this->_symbol == symbol) {
         return this;
     }
     return NULL;
+}
+
+Iterator* Term::createIterator() {
+    return new NullIterator(this);
 }

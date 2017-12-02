@@ -51,41 +51,14 @@ TEST_F(ParserTest, createTerm_Struct)
   ASSERT_EQ("s(1, X, tom)", term->symbol());
 }
 
-TEST_F(ParserTest, createArgs)
-{
-  Scanner scanner("1, X, tom");
-  Parser parser(scanner);
-  parser.createTerms();
-  vector<Term*> terms = parser.getTerms();
-  ASSERT_EQ("1", terms[0]->symbol());
-  ASSERT_EQ("X", terms[1]->symbol());
-  ASSERT_EQ("tom", terms[2]->symbol());
-}
 
-TEST_F(ParserTest,ListOfTermsEmpty)
-{
-  Scanner scanner;
-  Parser parser(scanner);
-  parser.createTerms();
-  vector<Term*> terms = parser.getTerms();
-  ASSERT_EQ(0,terms.size());
-}
+
 
 TEST_F(ParserTest, createTerm_underscoredVar)
 {
   Scanner scanner("_date");
   Parser parser(scanner);
   ASSERT_EQ("_date", parser.createTerm()->symbol());
-}
-
-TEST_F(ParserTest,listofTermsTwoNumber)
-{
-  Scanner scanner("12345 , 68");
-  Parser parser(scanner);
-  parser.createTerms();
-  vector<Term*> terms = parser.getTerms();
-  ASSERT_EQ("12345" , terms[0]->symbol());
-  ASSERT_EQ("68" , terms[1]->symbol());
 }
 
 TEST_F(ParserTest, createTerm_StructWithoutArgs) {
@@ -129,16 +102,6 @@ TEST_F( ParserTest, createTerm_nestedStruct2){
   Scanner scanner( "s(s(s(s(1))))");
   Parser parser( scanner );
   ASSERT_EQ( "s(s(s(s(1))))", parser.createTerm()->symbol());
-}
-
-TEST_F(ParserTest, createTerm_nestedStruct3) {
-  Scanner scanner("s(s(s(s(1)))), b(1,2,3)");
-  Parser parser(scanner);
-  parser.createTerms();
-  vector<Term*> terms = parser.getTerms();
-  EXPECT_EQ(2, terms.size());
-  EXPECT_EQ("s(s(s(s(1))))",terms[0]->symbol());
-  EXPECT_EQ("b(1, 2, 3)",terms[1]->symbol());
 }
 
 TEST_F(ParserTest, createTerm_DotStruct){

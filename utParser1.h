@@ -7,6 +7,7 @@
 #include "./include/list.h"
 #include "./include/variable.h"
 #include "./include/number.h"
+#include "./include/flyWeight.h"
 
 TEST(Parser, createTerm_Var){
     Scanner scanner("X");
@@ -300,21 +301,30 @@ TEST(ParserTest, listOfTermsThree) {
     ASSERT_EQ("Date", args[2]->symbol());
 }
 
-/*
-TEST(ParserTest, parseStructOfStructAllTheWay3) {
-    Scanner scanner("s(s(s(s(1)))), b(1,2,3), tom, X, 12.222");
-    Parser parser(scanner);
-    ASSERT_EQ("s(s(s(s(1))))", parser.createTerm()->symbol());
-    ASSERT_EQ(nullptr, parser.createTerm());
-    ASSERT_EQ("b(1, 2, 3)", parser.createTerm()->symbol());
-    ASSERT_EQ(nullptr, parser.createTerm());
-    ASSERT_EQ("tom", parser.createTerm()->symbol());
-    ASSERT_EQ(nullptr, parser.createTerm());
-    ASSERT_EQ("X", parser.createTerm()->symbol());
-    ASSERT_EQ(nullptr, parser.createTerm());
-    ASSERT_EQ("12.222", parser.createTerm()->symbol());
-    ASSERT_EQ(nullptr, parser.createTerm());
-    
+TEST(FlyWeight, isrepeat) {
+    FlyWeight flyWeight;
+    Number one(1);
+    Number two(2);
+    Number two2(2);
+
+    flyWeight.addTerms(&one);
+    Term* t = flyWeight.getCurrentTerm();
+    ASSERT_EQ("1", t->symbol());
+    // if not repeat and else use the term exist
+
+    flyWeight.addTerms(&two);
+    Term *t1 = flyWeight.getCurrentTerm();
+    ASSERT_EQ("2", t1->symbol());
+    flyWeight.addTerms(&two2);
+    Term *t2 = flyWeight.getCurrentTerm();
+    ASSERT_EQ("2", t2->symbol());
+    ASSERT_EQ(t1, t2);
+    flyWeight.addIndex();
+    Number oneo(1);
+    flyWeight.addTerms(&oneo);
+    Term*tt = flyWeight.getCurrentTerm();
+    ASSERT_EQ("1", tt->symbol());
+    ASSERT_NE(tt, t);
 }
-*/
+
 #endif
