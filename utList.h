@@ -4,11 +4,11 @@
 #include <string>
 using std::string;
 
-#include "./include/list.h"
-#include "./include/struct.h"
-#include "./include/atom.h"
-#include "./include/number.h"
-#include "./include/variable.h"
+#include "../include/list.h"
+#include "../include/struct.h"
+#include "../include/atom.h"
+#include "../include/number.h"
+#include "../include/variable.h"
 
 // When create a new list without any item
 // Then #symbol() of the list should return "[]"

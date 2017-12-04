@@ -1,13 +1,16 @@
 #ifndef NULLITERATOR_H
 #define NULLITERATOR_H
+
 #include "./iterator.h"
 
-class NullIterator : public Iterator {
+template<class Item>
+class NullIterator : public Iterator<Item> {
 public:
-    NullIterator(Term*);
-    Term * currentItem();
+    NullIterator(Item);
+    Item currentItem();
 private:
-    Term *_term;
+    Item _term;
 };
 
+#include "../src/nullIterator.tcc"
 #endif

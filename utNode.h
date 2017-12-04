@@ -3,16 +3,16 @@
 #include <vector>
 using std::vector;
 
-#include "./include/node.h"
-#include "./include/scanner.h"
-#include "./include/term.h"
-#include "./include/variable.h"
-#include "./include/number.h"
-#include "./include/matchExp.h"
-#include "./include/andExp.h"
-#include "./include/orExp.h"
-#include "./include/struct.h"
-#include "./include/termExp.h"
+#include "../include/node.h"
+#include "../include/scanner.h"
+#include "../include/term.h"
+#include "../include/variable.h"
+#include "../include/number.h"
+#include "../include/matchExp.h"
+#include "../include/andExp.h"
+#include "../include/orExp.h"
+#include "../include/struct.h"
+#include "../include/termExp.h"
 
 TEST(Node, expression1) { // X = 5.
     Variable X("X");

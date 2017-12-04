@@ -3,14 +3,14 @@
 
 #include <string>
 
-#include "./include/parser.h"
-#include "./include/scanner.h"
-#include "./include/term.h"
-#include "./include/list.h"
-#include "./include/variable.h"
-#include "./include/number.h"
-#include "./include/node.h"
-#include "./include/global.h"
+#include "../include/parser.h"
+#include "../include/scanner.h"
+#include "../include/term.h"
+#include "../include/list.h"
+#include "../include/variable.h"
+#include "../include/number.h"
+#include "../include/node.h"
+#include "../include/global.h"
 
 class ParserTest : public ::testing::Test {
 protected:

@@ -2,23 +2,25 @@
 #define BFSITERATOR_H
 
 #include "./iterator.h"
+#include <vector>
 #include <queue>
-
+using std::vector;
 using std::queue;
-class Term;
-class BFSIterator : public Iterator {
+template <class Item>
+class BFSIterator : public Iterator<Item> {
 public:
-    BFSIterator(Term *);
-    Term * currentItem();
+    BFSIterator(Item);
+    Item currentItem();
     bool isDone();
     void next();
     void first();
 private:
-    Term* _term;
-    Iterator *_currentIt;
-    queue<Term*> _queue;
-    Term * _currentTerm;
+    Item _term;
+    Iterator<Item> *_currentIt;
+    queue<Item> _queue;
+    Item _currentTerm;
     bool _isDone;
 };
+#include "../src/bfsIterator.tcc"
 
 #endif

@@ -1,14 +1,15 @@
 #ifndef ITERATOR_H
 #define ITERATOR_H
 
-class Term;
+template<class Item>
 class Iterator {
 public:
-    virtual Term * currentItem() = 0;
+    virtual Item currentItem() = 0;
     virtual bool isDone();
     virtual void next();
     virtual void first();
 private:
 };
 
+#include "../src/iterator.tcc"
 #endif

@@ -3,13 +3,11 @@
 
 #include <string>
 #include <vector>
-
 #include "./atom.h"
-#include "./iterator.h"
+#include "./term.h"
 using std::string;
 using std::vector;
 
-class Term;
 class Struct : public Term {
 public:
     Struct(Atom name, vector<Term*> args);
@@ -21,7 +19,6 @@ public:
     int argSize() const;
     vector<Term*> args() const;
     bool match(Term &term);
-    
     Term* find(string symbol);
 protected:
     Atom _name;

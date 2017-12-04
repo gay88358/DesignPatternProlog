@@ -1,7 +1,4 @@
 #include "../include/struct.h"
-#include "../include/atom.h"
-#include "../include/term.h"
-#include <iostream>
 
 Struct::Struct(Atom name, vector<Term*> args) : _name(name), _args(args) {
     this->_type = "Struct";    

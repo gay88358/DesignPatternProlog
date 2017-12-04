@@ -4,26 +4,30 @@
 using std::cout;
 using std::endl;
 
-DFSIterator::DFSIterator(Term *term):_term(term) {
+template<class Item>
+DFSIterator<Item>::DFSIterator(Item term):_term(term) {
     this->_isDone = false;
 }
 
-Term * DFSIterator::currentItem() {
+template<class Item>
+Item DFSIterator<Item>::currentItem() {
     return this->_currentTerm;
 }
 
-bool DFSIterator::isDone() {
+template<class Item>
+bool DFSIterator<Item>::isDone() {
     return this->_isDone;
 }
 
-void DFSIterator::next() {
-    Term * term = NULL;
+template<class Item>
+void DFSIterator<Item>::next() {
+    Item term = NULL;
     if (!this->_stack.empty())
         term =  this->_stack.top();
     if (term != NULL) {
         this->_currentTerm = term;
         this->_stack.pop();
-        vector<Term *> args = term->args();
+        vector<Item> args = term->args();
         if (args.size() > 0)
         {
             for (int i = args.size() - 1; i >= 0; i--) {
@@ -35,8 +39,9 @@ void DFSIterator::next() {
     }
 }
 
-void DFSIterator::first() {
-    vector<Term*> args = this->_term->args();
+template<class Item>
+void DFSIterator<Item>::first() {
+    vector<Item> args = this->_term->args();
     for (int i = args.size() - 1; i >= 0; i--) {
         this->_stack.push(args[i]);
     }

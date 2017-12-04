@@ -2,9 +2,8 @@
 #define ATOM_H
 
 #include <string>
-#include "./term.h"
 using std::string;
-
+#include "./term.h"
 class Atom : public Term {
 public:
   Atom (string s);

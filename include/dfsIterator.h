@@ -2,25 +2,24 @@
 #define DFSITERATOR_H
 
 #include "./iterator.h"
-#include "./struct.h"
-#include "./term.h"
 #include <vector>
 #include <stack>
 using std::vector;
 using std::stack;
-
-class DFSIterator : public Iterator {
+template<class Item>
+class DFSIterator : public Iterator<Item> {
 public:
-    DFSIterator(Term *);
-    Term * currentItem();
+    DFSIterator(Item);
+    Item currentItem();
     bool isDone();
     void next();
     void first();
 private:
-    Term * _term;
-    Term * _currentTerm;
+    Item _term;
+    Item _currentTerm;
     bool _isDone;
-    stack<Term*> _stack;
+    stack<Item> _stack;
 };
+#include "../src/dfsIterator.tcc"
 
 #endif
