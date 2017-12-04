@@ -49,7 +49,6 @@ TEST(Iterator, struct_iterator) {
     Struct s(Atom("s"), { &X, &tom, &n });
     Iterator<Term*> *it = s.createBFSIterator();
     it->first();
-
     ASSERT_FALSE(it->isDone());
     ASSERT_EQ("X", it->currentItem()->symbol());
     it->next();
