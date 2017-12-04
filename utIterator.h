@@ -412,7 +412,7 @@ TEST(DFSIterator, complext_list_dfsiterator2) {
     it->next();
     ASSERT_TRUE(it->isDone());
 }
-
+/*
 TEST(Iterator, empty_list_bfs) {
     // [[], []]
     List l1;
@@ -432,7 +432,7 @@ TEST(Iterator, empty_list_bfs) {
 
     ASSERT_TRUE(it->isDone());
 }
-
+*/
 TEST(Iterator, empty_struct_bfs) {
     // s(s(), s(2))
     Struct s1(Atom("s"), {});
