@@ -12,7 +12,7 @@
 using std::cout;
 using std::endl;
 
-
+/*
 TEST(Iterator, empty_list_bfs) {
     // [[], []]
     List l1;
@@ -33,6 +33,7 @@ TEST(Iterator, empty_list_bfs) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
+    delete it;
 }
 
 
@@ -61,7 +62,7 @@ TEST(Iterator, empty_struct_bfs) {
 
     ASSERT_TRUE(it->isDone());
 }
-
+*/
 TEST(Iterator, test) {
     Number one(1);
     Iterator<Term*> *it = one.createIterator();
