@@ -4,11 +4,11 @@ TARGET = hw7
 
 all: $(TARGET)
 
-$(TARGET): mainTerm.o number.o variable.o atom.o struct.o term.o list.o scanner.o token.o builder.o parser.o node.o matchExp.o andExp.o orExp.o termExp.o flyWeight.o
+$(TARGET): mainTerm.o number.o variable.o atom.o struct.o term.o list.o scanner.o token.o builder.o parser.o node.o matchExp.o andExp.o orExp.o termExp.o flyWeight.o 
 ifeq (${OS}, Windows_NT) 
 	g++ -o $(TARGET) mainTerm.o atom.o variable.o number.o struct.o term.o list.o scanner.o token.o builder.o parser.o node.o matchExp.o andExp.o orExp.o termExp.o flyWeight.o -lgtest
 else
-	g++ -o $(TARGET) mainTerm.o atom.o variable.o number.o struct.o term.o list.o scanner.o token.o builder.o parser.o node.o matchExp.o andExp.o orExp.o termExp.o flyWeight.o  -lgtest -lpthread
+	g++ -o $(TARGET) mainTerm.o atom.o variable.o number.o struct.o term.o list.o scanner.o token.o builder.o parser.o node.o matchExp.o andExp.o orExp.o termExp.o flyWeight.o -lgtest -lpthread
 endif
 
 mainTerm.o: mainTerm.cpp
@@ -66,19 +66,16 @@ flyWeight.o: $(INC_DIR)/flyWeight.h $(SRC)/flyWeight.cpp
 	g++ -std=gnu++0x -c $(SRC)/flyWeight.cpp
 
 iterator.o: $(INC_DIR)/iterator.h $(SRC)/iterator.tcc
-	g++ -std=gnu++0x -c $(SRC)/iterator.h
+	#g++ -std=gnu++0x -c $(SRC)/iterator.h
 
 nullIterator.o: $(INC_DIR)/nullIterator.h $(SRC)/nullIterator.tcc
-	g++ -std=gnu++0x -c $(SRC)/nullIterator.h
+	#g++ -std=gnu++0x -c $(INC_DIR)/nullIterator.h
 
 bfsIterator.o: $(INC_DIR)/bfsIterator.h $(SRC)/bfsIterator.tcc
-	g++ -std=gnu++0x -c $(SRC)/bfsIterator.h
+	#g++ -std=gnu++0x -c $(INC_DIR)/bfsIterator.h
 
 dfsIterator.o: $(INC_DIR)/dfsIterator.h $(SRC)/dfsIterator.tcc
-	g++ -std=gnu++0x -c $(SRC)/dfsIterator.h
-
-
-
+	#g++ -std=gnu++0x -c $(INC_DIR)/dfsIterator.h
 
 clean:	
 ifeq (${OS}, Windows_NT) 
