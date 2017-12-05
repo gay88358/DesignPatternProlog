@@ -14,6 +14,7 @@ public:
     bool isDone();
     void next();
     void first();
+    ~BFSIterator();
 private:
     Item _term;
     Iterator<Item> *_currentIt;

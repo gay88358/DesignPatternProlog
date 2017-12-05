@@ -14,6 +14,7 @@ public:
     bool isDone();
     void next();
     void first();
+    ~DFSIterator();
 private:
     Item _term;
     Item _currentTerm;

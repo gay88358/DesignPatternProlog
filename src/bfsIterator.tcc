@@ -1,4 +1,5 @@
 #include "../include/bfsIterator.h"
+#include <iostream>
 
 template<class Item>
 BFSIterator<Item>::BFSIterator(Item t): _term(t) {
@@ -41,4 +42,9 @@ void BFSIterator<Item>::first() {
         this->_queue.push(args[i]);
     }
     this->next();
+}
+
+template<class Item>
+BFSIterator<Item>::~BFSIterator() {
+    std::cout << "bfsIterator delete" << std::endl;
 }

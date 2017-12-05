@@ -48,6 +48,10 @@ void DFSIterator<Item>::first() {
     this->next();
 }
 
+template<class Item>
+DFSIterator<Item>::~DFSIterator() {
+    std::cout << "dfsIterator delete" << std::endl;
+}
 
 
 

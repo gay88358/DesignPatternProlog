@@ -8,6 +8,7 @@ public:
     virtual bool isDone();
     virtual void next();
     virtual void first();
+    virtual ~Iterator();
 private:
 };
 
