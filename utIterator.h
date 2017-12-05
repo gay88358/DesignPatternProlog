@@ -183,14 +183,15 @@ TEST(Iterator, complex_struct_iterator) {
 }   
 
 TEST(BFSIterator, struct_bfs) {
+    // s(s(X), 2, 3)
     Variable X("X");
     Number two(2);
     Number three(3);
     
     Struct s(Atom("s"), { &X });
     Struct s1(Atom("s"), { &s, &two, &three });
-    Iterator<Term*> *it1 = s1.createBFSIterator();
-    it1->first(); // initialize
+    Iterator<Term*> *it = s1.createBFSIterator();
+    it->first(); // initialize
 
 
     ASSERT_FALSE(it->isDone());
@@ -209,29 +210,9 @@ TEST(BFSIterator, struct_bfs) {
     ASSERT_EQ("X", it->currentItem()->symbol());
     it->next();
 
-    ASSERT_FALSE(it->isDone());
-    ASSERT_EQ("22", it->currentItem()->symbol());
-    it->next();
-
-    ASSERT_FALSE(it->isDone());
-    ASSERT_EQ("22", it->currentItem()->symbol());
-    it->next();
-
-    ASSERT_FALSE(it->isDone());
-    ASSERT_EQ("33", it->currentItem()->symbol());
-    it->next();
-
-    ASSERT_FALSE(it->isDone());
-    ASSERT_EQ("44", it->currentItem()->symbol());
-    it->next();
-
-    ASSERT_FALSE(it->isDone());
-    ASSERT_EQ("55", it->currentItem()->symbol());
-    it->next();
-
     ASSERT_TRUE(it->isDone());
 
-    delete it1;
+    delete it;
 }
 
 TEST(DFSIterator, struct_dfs) {
