@@ -65,16 +65,16 @@ termExp.o: $(INC_DIR)/termExp.h $(SRC)/termExp.cpp
 flyWeight.o: $(INC_DIR)/flyWeight.h $(SRC)/flyWeight.cpp
 	g++ -std=gnu++0x -c $(SRC)/flyWeight.cpp
 
-iterator.o: $(INC_DIR)/iterator.h $(SRC)/iterator.tcc
+iterator.o: $(INC_DIR)/iterator.h #$(SRC)/iterator.tcc
 	#g++ -std=gnu++0x -c $(SRC)/iterator.h
 
-nullIterator.o: $(INC_DIR)/nullIterator.h $(SRC)/nullIterator.tcc
+nullIterator.o: $(INC_DIR)/nullIterator.h #$(SRC)/nullIterator.tcc
 	#g++ -std=gnu++0x -c $(INC_DIR)/nullIterator.h
 
-bfsIterator.o: $(INC_DIR)/bfsIterator.h $(SRC)/bfsIterator.tcc
+bfsIterator.o: $(INC_DIR)/bfsIterator.h #$(SRC)/bfsIterator.tcc
 	#g++ -std=gnu++0x -c $(INC_DIR)/bfsIterator.h
 
-dfsIterator.o: $(INC_DIR)/dfsIterator.h $(SRC)/dfsIterator.tcc
+dfsIterator.o: $(INC_DIR)/dfsIterator.h #$(SRC)/dfsIterator.tcc
 	#g++ -std=gnu++0x -c $(INC_DIR)/dfsIterator.h
 
 clean:	

@@ -5,12 +5,20 @@ template<class Item>
 class Iterator {
 public:
     virtual Item currentItem() = 0;
-    virtual bool isDone();
-    virtual void next();
-    virtual void first();
-    virtual ~Iterator();
+    virtual bool isDone() {
+        return true;
+    }
+    virtual void next() {
+
+    }
+    virtual void first() {
+
+    }
+    virtual ~Iterator() {
+
+    }
 private:
 };
 
-#include "../src/iterator.tcc"
+//#include "../src/iterator.tcc"
 #endif
