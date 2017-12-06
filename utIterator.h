@@ -32,7 +32,7 @@ TEST(Iterator, empty_list_bfs) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-     ;
+      
 }
 
 
@@ -59,7 +59,7 @@ TEST(Iterator, empty_struct_bfs) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-     ;
+      
 
 
 }
@@ -70,7 +70,7 @@ TEST(Iterator, test) {
     cout << it << endl;
     ASSERT_EQ("1", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
-     ;
+      
 }
 
 TEST (Iterator, number_nullIterator) {
@@ -79,7 +79,7 @@ TEST (Iterator, number_nullIterator) {
     cout << it << endl;
     ASSERT_EQ("1", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
-     ;
+      
 }
 
 TEST (Iterator, variable_nullIterator) {
@@ -88,7 +88,7 @@ TEST (Iterator, variable_nullIterator) {
     cout << it << endl;
     ASSERT_EQ("X", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
-     ; 
+       
 }
 
 TEST (Iterator, atom_nullIterator) {
@@ -97,7 +97,7 @@ TEST (Iterator, atom_nullIterator) {
     cout << it << endl;
     ASSERT_EQ("tom", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
-     ;
+      
 }
 
 TEST(Iterator, struct_iterator) {
@@ -122,7 +122,7 @@ TEST(Iterator, struct_iterator) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-     ;
+      
 }
 
 TEST(Iterator, complex_struct_iterator) {
@@ -212,7 +212,7 @@ TEST(BFSIterator, struct_bfs) {
 
     ASSERT_TRUE(it->isDone());
 
-     ;
+      
 }
 
 TEST(DFSIterator, struct_dfs) {
@@ -242,7 +242,6 @@ TEST(DFSIterator, struct_dfs) {
     it->next();
     
     ASSERT_TRUE(it->isDone());
-     ;
 }
 
 TEST(BFSIterator, simple_list_iterator) {
@@ -269,7 +268,6 @@ TEST(BFSIterator, simple_list_iterator) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-     ;
 }
 
 TEST(BFSIterator, complex_list_bfsiterator) {
@@ -312,7 +310,6 @@ TEST(BFSIterator, complex_list_bfsiterator) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-     ;
 }
 
 TEST(DFSIterator, complex_list_dfsiterator) {
@@ -355,7 +352,6 @@ TEST(DFSIterator, complex_list_dfsiterator) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-     ;
 }
 
 TEST(BFSIterator, complex_list_bfsiterator2) {
@@ -421,7 +417,7 @@ TEST(BFSIterator, complex_list_bfsiterator2) {
     ASSERT_EQ("2", it->currentItem()->symbol());
     it->next();
     ASSERT_TRUE(it->isDone());
-     
+    
 }
 
 TEST(DFSIterator, complext_list_dfsiterator2) {
@@ -489,5 +485,321 @@ TEST(DFSIterator, complext_list_dfsiterator2) {
     it->next();
     ASSERT_TRUE(it->isDone());
 }
+
+TEST(iterator, combo1_BFS) {
+    Atom bun("bun");
+    Atom beefPatty("beefPatty");
+    Atom shreddedLettuce("shreddedLettuce");
+    Atom sauce("sauce");
+    Atom cheese("cheese");
+    Atom pickleSlice1("pickleSlice1");
+    Atom pickleSlice2("pickleSlice2");
+    Atom onion1("onion1");
+    Atom onion2("onion2");
+    Atom coke("coke");
+    Atom fries1("fries1");
+    Atom fries2("fries2");
+    List pickleSlice({&pickleSlice1, &pickleSlice2});
+    List onion({&onion1, &onion2});
+    List fries({&fries1, &fries2});
+    Struct bigMac(Atom("bigMac"), {&bun, &beefPatty, &shreddedLettuce, &sauce, &cheese, &pickleSlice, &onion});
+    Struct combo1(Atom("combo1"), {&bigMac, &coke, &fries});
+ 
+    Iterator<Term*> * bfsIt = combo1.createBFSIterator();
+    bfsIt->first();
+ 
+    ASSERT_EQ("bigMac(bun, beefPatty, shreddedLettuce, sauce, cheese, [pickleSlice1, pickleSlice2], [onion1, onion2])", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("coke", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[fries1, fries2]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("bun", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("beefPatty", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("shreddedLettuce", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("sauce", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("cheese", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[pickleSlice1, pickleSlice2]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[onion1, onion2]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("fries1", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("fries2", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("pickleSlice1", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("pickleSlice2", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("onion1", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("onion2", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_TRUE(bfsIt->isDone());
+}
+ 
+TEST(iterator, combo1_DFS) {
+    Atom bun("bun");
+    Atom beefPatty("beefPatty");
+    Atom shreddedLettuce("shreddedLettuce");
+    Atom sauce("sauce");
+    Atom cheese("cheese");
+    Atom pickleSlice1("pickleSlice1");
+    Atom pickleSlice2("pickleSlice2");
+    Atom onion1("onion1");
+    Atom onion2("onion2");
+    Atom coke("coke");
+    Atom fries1("fries1");
+    Atom fries2("fries2");
+    List pickleSlice({&pickleSlice1, &pickleSlice2});
+    List onion({&onion1, &onion2});
+    List fries({&fries1, &fries2});
+    Struct bigMac(Atom("bigMac"), {&bun, &beefPatty, &shreddedLettuce, &sauce, &cheese, &pickleSlice, &onion});
+    Struct combo1(Atom("combo1"), {&bigMac, &coke, &fries});
+ 
+    Iterator<Term*> * dfsIt = combo1.createDFSIterator();
+    dfsIt->first();
+ 
+    ASSERT_EQ("bigMac(bun, beefPatty, shreddedLettuce, sauce, cheese, [pickleSlice1, pickleSlice2], [onion1, onion2])", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("bun", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("beefPatty", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("shreddedLettuce", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("sauce", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("cheese", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[pickleSlice1, pickleSlice2]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("pickleSlice1", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("pickleSlice2", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[onion1, onion2]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("onion1", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("onion2", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("coke", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[fries1, fries2]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("fries1", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("fries2", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_TRUE(dfsIt->isDone());
+}
+ 
+TEST(iterator, manyBendedKrait_BFS) {
+    List band1; List band2; List band3; List band4;
+    Struct manyBendedKrait(Atom("manyBendedKrait"), {&band1, &band2, &band3, &band4});
+ 
+    Iterator<Term*> * bfsIt = manyBendedKrait.createBFSIterator();
+    bfsIt->first();
+ 
+    ASSERT_EQ("[]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_TRUE(bfsIt->isDone());    
+}
+ 
+TEST(iterator, manyBendedKrait_DFS) {
+    List band1; List band2; List band3; List band4;
+    Struct manyBendedKrait(Atom("manyBendedKrait"), {&band1, &band2, &band3, &band4});
+ 
+    Iterator<Term*> * dfsIt = manyBendedKrait.createDFSIterator();
+    dfsIt->first();
+ 
+    ASSERT_EQ("[]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_TRUE(dfsIt->isDone());    
+}
+ 
+TEST(iterator, shadowCloneJutsu_BFS){
+    Atom naruto("naruto");
+    List forest1({&naruto});
+    List forest2_1({&naruto});
+    List forest2_2({&naruto});
+    List forest2({&forest2_1, &forest2_2});
+    List forest3_1({&naruto});
+    List forest3_2({&naruto});
+    List forest3_3({&naruto});
+    List forest3({&forest3_1, &forest3_2, &forest3_3});
+    List forest4({&naruto, &forest3, &forest2, &forest1});
+ 
+    Iterator<Term*> * bfsIt = forest4.createBFSIterator();
+    bfsIt->first();
+   
+    ASSERT_EQ("naruto", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[[naruto], [naruto], [naruto]]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[[naruto], [naruto]]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[naruto]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[naruto]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[naruto]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[naruto]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[naruto]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[naruto]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("naruto", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("naruto", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("naruto", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("naruto", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("naruto", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("naruto", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_TRUE(bfsIt->isDone());
+}
+ 
+TEST(iterator, shadowCloneJutsu_DFS){
+    Atom naruto("naruto");
+    List forest1({&naruto});
+    List forest2_1({&naruto});
+    List forest2_2({&naruto});
+    List forest2({&forest2_1, &forest2_2});
+    List forest3_1({&naruto});
+    List forest3_2({&naruto});
+    List forest3_3({&naruto});
+    List forest3({&forest3_1, &forest3_2, &forest3_3});
+    List forest4({&naruto, &forest3, &forest2, &forest1});
+ 
+    Iterator<Term*> * dfsIt = forest4.createDFSIterator();
+    dfsIt->first();
+    ASSERT_EQ("naruto", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[[naruto], [naruto], [naruto]]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[naruto]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("naruto", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[naruto]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("naruto", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[naruto]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("naruto", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[[naruto], [naruto]]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[naruto]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("naruto", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[naruto]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("naruto", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[naruto]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("naruto", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_TRUE(dfsIt->isDone());
+}
+ 
+TEST(iterator, unbalanceTree_BFS){
+    Number num1(1);
+    Struct s1(Atom("s"), {&num1});
+    List list1({&s1});
+    Struct s2(Atom("s"), {&list1});
+    List list2({&s2});
+    Struct s3(Atom("s"), {&list2});
+    List list3({&s3});
+    Struct s4(Atom("s"), {&list3});
+    Number num(3);
+    List list4({&s4, &num});
+ 
+    Iterator<Term*> * bfsIt = list4.createBFSIterator();
+    bfsIt->first();
+    ASSERT_EQ("s([s([s([s(1)])])])", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("3", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[s([s([s(1)])])]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("s([s([s(1)])])", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[s([s(1)])]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("s([s(1)])", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("[s(1)]", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("s(1)", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_EQ("1", bfsIt->currentItem()->symbol());
+    bfsIt->next();
+    ASSERT_TRUE(bfsIt->isDone());
+}
+ 
+TEST(iterator, unbalanceTree_DFS){
+    Number num1(1);
+    Struct s1(Atom("s"), {&num1});
+    List list1({&s1});
+    Struct s2(Atom("s"), {&list1});
+    List list2({&s2});
+    Struct s3(Atom("s"), {&list2});
+    List list3({&s3});
+    Struct s4(Atom("s"), {&list3});
+    Number num3(3);
+    List list4({&s4, &num3});
+ 
+    Iterator<Term*> * dfsIt = list4.createDFSIterator();
+    dfsIt->first();
+    ASSERT_EQ("s([s([s([s(1)])])])", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[s([s([s(1)])])]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("s([s([s(1)])])", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[s([s(1)])]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("s([s(1)])", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("[s(1)]", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("s(1)", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("1", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_EQ("3", dfsIt->currentItem()->symbol());
+    dfsIt->next();
+    ASSERT_TRUE(dfsIt->isDone());
+}
+
 
 #endif
