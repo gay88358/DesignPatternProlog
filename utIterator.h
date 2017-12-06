@@ -32,7 +32,7 @@ TEST(Iterator, empty_list_bfs) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-    delete it;
+     ;
 }
 
 
@@ -59,7 +59,7 @@ TEST(Iterator, empty_struct_bfs) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-    delete it;
+     ;
 
 
 }
@@ -70,7 +70,7 @@ TEST(Iterator, test) {
     cout << it << endl;
     ASSERT_EQ("1", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
-    delete it;
+     ;
 }
 
 TEST (Iterator, number_nullIterator) {
@@ -79,7 +79,7 @@ TEST (Iterator, number_nullIterator) {
     cout << it << endl;
     ASSERT_EQ("1", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
-    delete it;
+     ;
 }
 
 TEST (Iterator, variable_nullIterator) {
@@ -88,7 +88,7 @@ TEST (Iterator, variable_nullIterator) {
     cout << it << endl;
     ASSERT_EQ("X", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
-    delete it; 
+     ; 
 }
 
 TEST (Iterator, atom_nullIterator) {
@@ -97,7 +97,7 @@ TEST (Iterator, atom_nullIterator) {
     cout << it << endl;
     ASSERT_EQ("tom", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
-    delete it;
+     ;
 }
 
 TEST(Iterator, struct_iterator) {
@@ -122,7 +122,7 @@ TEST(Iterator, struct_iterator) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-    delete it;
+     ;
 }
 
 TEST(Iterator, complex_struct_iterator) {
@@ -212,7 +212,7 @@ TEST(BFSIterator, struct_bfs) {
 
     ASSERT_TRUE(it->isDone());
 
-    delete it;
+     ;
 }
 
 TEST(DFSIterator, struct_dfs) {
@@ -242,7 +242,7 @@ TEST(DFSIterator, struct_dfs) {
     it->next();
     
     ASSERT_TRUE(it->isDone());
-    delete it;
+     ;
 }
 
 TEST(BFSIterator, simple_list_iterator) {
@@ -269,7 +269,7 @@ TEST(BFSIterator, simple_list_iterator) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-    delete it;
+     ;
 }
 
 TEST(BFSIterator, complex_list_bfsiterator) {
@@ -312,7 +312,7 @@ TEST(BFSIterator, complex_list_bfsiterator) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-    delete it;
+     ;
 }
 
 TEST(DFSIterator, complex_list_dfsiterator) {
@@ -355,7 +355,7 @@ TEST(DFSIterator, complex_list_dfsiterator) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-    delete it;
+     ;
 }
 
 TEST(BFSIterator, complex_list_bfsiterator2) {
@@ -421,7 +421,7 @@ TEST(BFSIterator, complex_list_bfsiterator2) {
     ASSERT_EQ("2", it->currentItem()->symbol());
     it->next();
     ASSERT_TRUE(it->isDone());
-    delete it;
+     
 }
 
 TEST(DFSIterator, complext_list_dfsiterator2) {
@@ -488,7 +488,6 @@ TEST(DFSIterator, complext_list_dfsiterator2) {
     
     it->next();
     ASSERT_TRUE(it->isDone());
-    delete it;
 }
 
 #endif
