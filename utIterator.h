@@ -34,11 +34,16 @@ TEST(Iterator, empty_list_bfs) {
     cout << "next" << endl;
 
     ASSERT_FALSE(it->isDone());
+    cout << "isDone2" << endl;
+
     ASSERT_EQ("[]", it->currentItem()->symbol()); 
+    cout << "[]" << endl;
     it->next();
+    cout << "next" << endl;
 
     ASSERT_TRUE(it->isDone());
-      
+        cout << "isDone3" << endl;
+  
 }
 
 
