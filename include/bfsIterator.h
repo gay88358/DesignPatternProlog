@@ -53,6 +53,7 @@ public:
     }
 
     ~BFSIterator() {
+        delete _currentIt;
         //std::cout << "bfsIterator delete" << std::endl;
     }
 

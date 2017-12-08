@@ -59,11 +59,8 @@ TEST(Iterator, empty_struct_bfs) {
     it->next();
 
     ASSERT_TRUE(it->isDone());
-      
-
-
 }
-
+/*
 TEST(Iterator, test) {
     Number one(1);
     Iterator<Term*> *it = one.createIterator();
@@ -800,6 +797,6 @@ TEST(iterator, unbalanceTree_DFS){
     dfsIt->next();
     ASSERT_TRUE(dfsIt->isDone());
 }
-
+*/
 
 #endif
