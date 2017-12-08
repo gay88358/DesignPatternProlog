@@ -34,9 +34,7 @@ public:
         Item term;
         if (!this->_queue.empty()) {
             term = this->_queue.front();
-            cout << term->symbol() << endl;
         } else {
-            cout << "nullptr" << endl;
             term = nullptr;
         }
 
