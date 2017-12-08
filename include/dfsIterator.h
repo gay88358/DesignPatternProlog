@@ -49,7 +49,9 @@ public:
     }   
 
     void first() {
+        std::cout << "first operation" << std::endl;
         vector<Item> args = this->_term->args();
+        std::cout << args.size() << std::endl;
         for (int i = args.size() - 1; i >= 0; i--) {
             this->_stack.push(args[i]);
         }

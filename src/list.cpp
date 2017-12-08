@@ -9,7 +9,7 @@ List::List () {
 }
 
 List::List (vector<Term *> const & elements):_elements(elements) {
-    this->_type = "List";        
+    this->_type = "List";
 }
 
 int List::argSize() const {
