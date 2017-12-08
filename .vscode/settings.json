@@ -34,6 +34,8 @@
         "__string": "cpp",
         "algorithm": "cpp",
         "random": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "*.tcc": "cpp",
+        "iostream": "cpp"
     }
 }

@@ -25,10 +25,14 @@ TEST(Iterator, empty_list_bfs) {
     cout << "ok first" << endl;
 
     ASSERT_FALSE(it->isDone());
-    
+    cout << "ok isDone" << endl;
+
     ASSERT_EQ("[]", it->currentItem()->symbol());
+    cout << "[]" << endl;
+
     it->next();
-    
+    cout << "next" << endl;
+
     ASSERT_FALSE(it->isDone());
     ASSERT_EQ("[]", it->currentItem()->symbol()); 
     it->next();
