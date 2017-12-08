@@ -31,8 +31,16 @@ public:
     }
 
     void next() {
-        Item term = this->_queue.front();
-        if (term) {
+        Item term;
+        if (!this->_queue.empty()) {
+            term = this->_queue.front();
+            cout << term->symbol() << endl;
+        } else {
+            cout << "nullptr" << endl;
+            term = nullptr;
+        }
+
+        if (term != nullptr) {
             cout << "in next" << endl;
             this->_currentTerm = term;
             this->_queue.pop();
