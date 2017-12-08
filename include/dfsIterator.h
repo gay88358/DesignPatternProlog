@@ -1,6 +1,7 @@
 #ifndef DFSITERATOR_H
 #define DFSITERATOR_H
 
+#include <iostream>
 #include "./iterator.h"
 #include <vector>
 #include <stack>
@@ -28,10 +29,11 @@ public:
     }
 
     void next() {
-        Item term = NULL;
+        Item term = nullptr;
         if (!this->_stack.empty())
             term =  this->_stack.top();
-        if (term != NULL) {
+        if (term) {
+            std::cout << "in condition" << std::endl;
             this->_currentTerm = term;
             this->_stack.pop();
             vector<Item> args = term->args();
