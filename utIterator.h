@@ -23,7 +23,9 @@ TEST(Iterator, empty_list_bfs) {
     cout << "before first" << endl;
     it->first();
     cout << "ok first" << endl;
+
     ASSERT_FALSE(it->isDone());
+    
     ASSERT_EQ("[]", it->currentItem()->symbol());
     it->next();
     

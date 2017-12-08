@@ -4,17 +4,25 @@
 #include <string>
 using std::string;
 
-#include "../include/list.h"
-#include "../include/struct.h"
-#include "../include/atom.h"
-#include "../include/number.h"
-#include "../include/variable.h"
+#include "./include/list.h"
+#include "./include/struct.h"
+#include "./include/atom.h"
+#include "./include/number.h"
+#include "./include/variable.h"
 
 // When create a new list without any item
 // Then #symbol() of the list should return "[]"
 TEST (List, constructor) {
     List l;
     ASSERT_EQ("[]", l.symbol());
+}
+
+TEST(List, emptyofempty_constructor) {
+    // [[], []]
+    List l1;
+    List l2;
+    List l3({ &l1, &l2 });
+    ASSERT_EQ("[[], []]", l3.symbol());
 }
 
 // [X, Y] = [Y, X]
