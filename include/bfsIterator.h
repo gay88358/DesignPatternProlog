@@ -4,9 +4,7 @@
 #include "./iterator.h"
 #include <vector>
 #include <queue>
-#include <iostream>
-using std::cout;
-using std::endl;
+
 using std::vector;
 using std::queue;
 template <class Item>
@@ -39,7 +37,6 @@ public:
         }
 
         if (term != nullptr) {
-            cout << "in next" << endl;
             this->_currentTerm = term;
             this->_queue.pop();
             vector<Item> args = term->args();
@@ -50,7 +47,6 @@ public:
                 }
             }
         } else {
-            cout << "isDonw" << endl;
 
             this->_isDone = true;
         }
@@ -58,7 +54,6 @@ public:
 
     void first() {
         vector<Item> args = this->_term->args();
-        cout << args.size() << endl;
         for (int i = 0; i < args.size(); i++) {
             this->_queue.push(args[i]);
         }
@@ -66,7 +61,6 @@ public:
     }
 
     ~BFSIterator() {
-        //std::cout << "bfsIterator delete" << std::endl;
     }
 
 private:

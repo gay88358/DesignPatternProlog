@@ -8,9 +8,6 @@
 //#include "./utParser1.h"
 //#include "./utNode.h"
 #include "./utIterator.h"
-#include <iostream>
-using std::cout;
-using std::endl;
 
 
 int main( int argc , char **argv )

@@ -33,10 +33,8 @@ TEST(Iterator, empty_list_bfs) {
 
     ASSERT_EQ("[]", it->currentItem()->symbol()); 
     it->next();
-    cout << "next" << endl;
 
     ASSERT_TRUE(it->isDone());
-    cout << "isDone3" << endl;
     
 }
 
@@ -48,9 +46,7 @@ TEST(Iterator, empty_struct_bfs) {
     Struct s2(Atom("s"), { &two });
     Struct s3(Atom("s"), { &s1, &s2 });
     Iterator<Term*> *it = s3.createBFSIterator();
-    cout << "before first" << endl;
     it->first();
-    cout << "ok" << endl;
     ASSERT_FALSE(it->isDone());
     ASSERT_EQ("s()", it->currentItem()->symbol());
     it->next();
@@ -69,7 +65,7 @@ TEST(Iterator, empty_struct_bfs) {
 TEST(Iterator, test) {
     Number one(1);
     Iterator<Term*> *it = one.createIterator();
-    cout << it << endl;
+     
     ASSERT_EQ("1", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
       
@@ -78,7 +74,7 @@ TEST(Iterator, test) {
 TEST (Iterator, number_nullIterator) {
     Number one(1);
     Iterator<Term*> *it = one.createIterator();
-    cout << it << endl;
+     
     ASSERT_EQ("1", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
       
@@ -87,7 +83,7 @@ TEST (Iterator, number_nullIterator) {
 TEST (Iterator, variable_nullIterator) {
     Variable X("X");
     Iterator<Term*> *it = X.createIterator();
-    cout << it << endl;
+     
     ASSERT_EQ("X", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
        
@@ -96,7 +92,7 @@ TEST (Iterator, variable_nullIterator) {
 TEST (Iterator, atom_nullIterator) {
     Atom tom("tom");
     Iterator<Term*> *it = tom.createIterator();
-    cout << it << endl;
+     
     ASSERT_EQ("tom", it->currentItem()->symbol());
     ASSERT_TRUE(it->isDone());
       
@@ -109,7 +105,7 @@ TEST(Iterator, struct_iterator) {
     Number n(1.22);
     Struct s(Atom("s"), { &X, &tom, &n });
     Iterator<Term*> *it = s.createBFSIterator();
-    cout << it << endl;
+     
     it->first();
     ASSERT_FALSE(it->isDone());
     ASSERT_EQ("X", it->currentItem()->symbol());
@@ -141,7 +137,7 @@ TEST(Iterator, complex_struct_iterator) {
     Struct t(Atom("triangle"), { &p1, &p2, &p3 });
     ASSERT_EQ("triangle(point(11, 22), point(22, 33), point(44, 55))", t.symbol());
     Iterator<Term*> *it = t.createBFSIterator();
-    cout << it << endl;
+     
     it->first(); // initialize
 
     ASSERT_FALSE(it->isDone());
@@ -224,7 +220,7 @@ TEST(DFSIterator, struct_dfs) {
     Struct s(Atom("s"), { &X });
     Struct s1(Atom("s"), { &s, &two, &three });
     Iterator<Term*> *it = s1.createDFSIterator();
-    cout << it << endl;
+     
     it->first(); // initialize
 
     ASSERT_FALSE(it->isDone());
@@ -253,7 +249,7 @@ TEST(BFSIterator, simple_list_iterator) {
     Atom terence_tao("terence_tao");
     List l({ &n, &X, &terence_tao });
     Iterator<Term*> *it = l.createDFSIterator();
-    cout << it << endl;
+     
     
     it->first(); // initialize
 
@@ -283,7 +279,7 @@ TEST(BFSIterator, complex_list_bfsiterator) {
     List l2({ &l, &tom, &jerry });
     
     Iterator<Term*> *it = l2.createBFSIterator();
-        cout << it << endl;
+         
 
     it->first(); // initialize
 
@@ -325,7 +321,7 @@ TEST(DFSIterator, complex_list_dfsiterator) {
     List l2({ &l, &tom, &jerry });
     
     Iterator<Term*> *it = l2.createDFSIterator();
-    cout << it << endl;
+     
     
     it->first(); // initialize
 
@@ -373,7 +369,7 @@ TEST(BFSIterator, complex_list_bfsiterator2) {
     ASSERT_EQ("[[496, X, terence_tao], s(X, Y, [1, 2]), tom]", l4.symbol());
 
     Iterator<Term*> *it = l4.createBFSIterator();
-    cout << it << endl;
+     
     it->first(); // initialize
     
     ASSERT_FALSE(it->isDone());
@@ -439,7 +435,7 @@ TEST(DFSIterator, complext_list_dfsiterator2) {
     ASSERT_EQ("[[496, X, terence_tao], s(X, Y, [1, 2]), tom]", l4.symbol());
 
     Iterator<Term*> *it = l4.createDFSIterator();
-    cout << it << endl;
+     
     it->first(); // initialize
     ASSERT_FALSE(it->isDone());
     ASSERT_EQ("[496, X, terence_tao]", it->currentItem()->symbol());
