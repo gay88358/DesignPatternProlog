@@ -2,8 +2,10 @@
 
 #include <iostream>
 
-List::List (): _elements() { // default constructor
-    this->_type = "List";        
+List::List () {
+    this->_type = "List";
+    vector<Term*> args = {};
+    this->_elements = args;        
 }
 
 List::List (vector<Term *> const & elements):_elements(elements) {

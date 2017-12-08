@@ -20,9 +20,9 @@ TEST(Iterator, empty_list_bfs) {
     List l3({ &l1, &l2 });
 
     Iterator<Term*> *it = l3.createBFSIterator();
-
+    cout << "before first" << endl;
     it->first();
-
+    cout << "ok first" << endl;
     ASSERT_FALSE(it->isDone());
     ASSERT_EQ("[]", it->currentItem()->symbol());
     it->next();
@@ -43,9 +43,9 @@ TEST(Iterator, empty_struct_bfs) {
     Struct s2(Atom("s"), { &two });
     Struct s3(Atom("s"), { &s1, &s2 });
     Iterator<Term*> *it = s3.createBFSIterator();
-
+    cout << "before first" << endl;
     it->first();
-
+    cout << "ok" << endl;
     ASSERT_FALSE(it->isDone());
     ASSERT_EQ("s()", it->currentItem()->symbol());
     it->next();
