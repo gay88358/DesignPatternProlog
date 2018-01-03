@@ -3,14 +3,14 @@
 
 #include <string>
 
-#include "../include/parser.h"
-#include "../include/scanner.h"
-#include "../include/term.h"
-#include "../include/list.h"
-#include "../include/variable.h"
-#include "../include/number.h"
-#include "../include/node.h"
-#include "../include/global.h"
+#include "./include/parser.h"
+#include "./include/scanner.h"
+#include "./include/term.h"
+#include "./include/list.h"
+#include "./include/variable.h"
+#include "./include/number.h"
+#include "./include/node.h"
+#include "./include/global.h"
 
 class ParserTest : public ::testing::Test {
 protected:
@@ -23,6 +23,19 @@ const string COMMA = ",";
 const string SEMICOLON = ";";
 const string TERM = "TERM";
 
+
+TEST_F(ParserTest, exception_getargs) {
+  Scanner scanner("tom, marry;");
+  Parser parser(scanner);
+  try {
+      vector<Term*> v = parser.getArgs();
+      FAIL() << "It should throw an exception: Unbalanced operator";
+  }
+  catch (string msg) {
+      ASSERT_EQ("Unbalanced operator", msg);
+  }
+}
+/*
 TEST_F(ParserTest, createTerm_Var){
   Scanner scanner("X");
   Parser parser(scanner);
@@ -391,5 +404,5 @@ TEST_F(ParserTest, MatchingSuccess) {
   EXPECT_EQ("2", terms[2]->value());
   EXPECT_EQ("s(s(2))", terms[4]->value());
 }
-
+*/
 #endif

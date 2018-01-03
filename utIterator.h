@@ -119,8 +119,7 @@ TEST(Iterator, struct_iterator) {
     ASSERT_EQ("1.22", it->currentItem()->symbol());
     it->next();
 
-    ASSERT_TRUE(it->isDone());
-      
+    ASSERT_TRUE(it->isDone());      
 }
 
 TEST(Iterator, complex_struct_iterator) {
@@ -249,7 +248,6 @@ TEST(BFSIterator, simple_list_iterator) {
     Atom terence_tao("terence_tao");
     List l({ &n, &X, &terence_tao });
     Iterator<Term*> *it = l.createDFSIterator();
-     
     
     it->first(); // initialize
 
@@ -484,5 +482,29 @@ TEST(DFSIterator, complext_list_dfsiterator2) {
     ASSERT_TRUE(it->isDone());
 }
 
+TEST(Iterator, structIterator) {
+    // s(tom, jerry, X)
+    Atom tom("tom");
+    Atom jerry("jerry");
+    Variable X("X");
+    Struct s(Atom("s"), { &tom, &jerry, &X });
+    ASSERT_EQ("s(tom, jerry, X)", s.symbol());
+    Iterator<Term*> *it = s.createIterator();
+    it->first();
+    
+    ASSERT_FALSE(it->isDone());
+    ASSERT_EQ("tom", it->currentItem()->symbol());
+    
+    it->next();
+    ASSERT_FALSE(it->isDone());
+    ASSERT_EQ("jerry", it->currentItem()->symbol());
+    
+    it->next();
+    ASSERT_FALSE(it->isDone());
+    ASSERT_EQ("X", it->currentItem()->symbol());
+    
+    it->next();
+    ASSERT_TRUE(it->isDone());    
+}
 
 #endif

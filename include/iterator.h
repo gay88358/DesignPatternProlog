@@ -17,8 +17,5 @@ public:
     virtual ~Iterator() {
 
     }
-private:
 };
-
-//#include "../src/iterator.tcc"
 #endif

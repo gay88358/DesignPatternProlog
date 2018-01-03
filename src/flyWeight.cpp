@@ -24,6 +24,7 @@ void FlyWeight::addTerms(Term* t) {
         this->_currentTerm = t;
         this->_allArgs.push_back(t);
     } else {
+        cout << findTerm->symbol() << " = " << findTerm->value() << endl;
         this->_currentTerm = findTerm;
         this->_allArgs.push_back(findTerm);
     }

@@ -30,7 +30,7 @@ class Parser {
 public:
     Parser(Scanner scanner);
     Term* createTerm();
-    void matchings();
+    void buildExpression();
     //Node* expressionTree(); 
     vector<Term*> getArgs(); 
     vector<Term *> getTerms();
@@ -38,6 +38,8 @@ public:
     Node* factor();
     Node* term();
     Node* expressionTree();
+    bool isValidChar(char c);
+    string getResult();
 private:
     vector<Term *> _terms;
     vector<Term *> _tempTerms;

@@ -7,12 +7,11 @@
 //#include "./utParser.h"
 //#include "./utParser1.h"
 //#include "./utNode.h"
-#include "./utIterator.h"
-
-
+//#include "./utIterator.h"
+//#include "./utException.h"
+#include "./utExpression.h"
 int main( int argc , char **argv )
 {
-   
     testing :: InitGoogleTest( &argc , argv ) ;
     return RUN_ALL_TESTS( ) ;
 }

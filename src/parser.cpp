@@ -42,13 +42,23 @@ vector<Term*> Parser::getArgs() {
     if (term == NULL)  {
         return args;
     }
+    else if (this->_currentToken->tokenValue() == ";" || this->_currentToken->tokenValue() == ",")
+        throw string("Unbalanced operator");
+
     this->_fly->findTerms(term);
     args.push_back(this->_fly->getCurrentTerm());
 
     while (!this->createTerm() && _currentToken->tokenValue() == ",") { // not null && value is ', '
-        this->_fly->findTerms(this->createTerm());
+        Term * anotherTerm = this->createTerm();
+        if (anotherTerm->symbol() == "," || anotherTerm->symbol() == ";")
+            throw string("Unbalanced operator");
+
+        this->_fly->findTerms(anotherTerm);
         args.push_back(this->_fly->getCurrentTerm());
     }
+
+    if (_currentToken->tokenValue() == ";")
+        throw string("Unbalanced operator");        
     return args;
 }
 
@@ -63,7 +73,13 @@ void Parser::createTerms() {
     }
 }
 
-void Parser::matchings() {
+string Parser::getResult() {
+    if (!this->_expTree->evaluate())
+        return "false.";
+    return this->_expTree->symbol() + ".";
+}
+
+void Parser::buildExpression() {
     this->_fly->pushOrNode(this->term());
     while (this->_currentToken->tokenValue() == ";") {
         // copy term in the tempterms and insert all terms in the terms
@@ -71,29 +87,43 @@ void Parser::matchings() {
         this->_fly->addIndex(); // when encounter the comma, crete new vector of item
         this->_fly->pushOrNode(this->term());
     }
+    if (this->_currentToken->tokenValue() != ".")
+        throw string("Missing token '.'");
+
     this->_expTree = this->_fly->getOrNode();
-}
-
-Node* Parser::factor() {
-    this->_fly->addTerms(this->createTerm());
-    Term *left_term = this->_fly->getCurrentTerm();
-
-    this->createTerm(); // extract equal token
-    
-    this->_fly->addTerms(this->createTerm());
-    Term *right_term = this->_fly->getCurrentTerm();
-    
-    this->createTerm();
-    return new MatchExp(new TermExp(left_term), new TermExp(right_term));
 }
 
 Node* Parser::term() {
     this->_fly->pushAndNode(this->factor());
 
-    while (this->_currentToken->tokenValue() == ",")
+    while (this->_currentToken->tokenValue() == ",") {
+        if (_scanner.currentChar() == '.')
+            throw string("Unexpected ',' before '.'");
         this->_fly->pushAndNode(this->factor());
-    
+    }
+        
     return this->_fly->getAndNode();
+}
+
+Node* Parser::factor() { // X = 1.
+    this->_fly->addTerms(this->createTerm());
+    Term *left_term = this->_fly->getCurrentTerm();
+
+    this->createTerm(); // extract equal token
+    string op = this->_currentToken->tokenValue();
+    if (op != "=" && _scanner.currentChar() == '.')
+        throw string("Unexpected '"+ op + "' before '.'");
+
+    Term *term = this->createTerm();
+    if (term != NULL)
+        this->_fly->addTerms(term);
+    else
+        throw string(left_term->symbol() + " does never get assignment");
+
+    Term *right_term = this->_fly->getCurrentTerm();
+
+    this->createTerm();
+    return new MatchExp(left_term, right_term);
 }
 
 vector<Term *> Parser::getTerms() {
@@ -102,4 +132,8 @@ vector<Term *> Parser::getTerms() {
 
 Node* Parser::expressionTree() {
     return this->_expTree;
+}
+
+bool Parser::isValidChar(char c) {
+    return (c == ';' || c == ',');
 }

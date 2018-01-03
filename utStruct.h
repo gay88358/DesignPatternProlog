@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include <vector>
-#include "../include/atom.h"
-#include "../include/struct.h"
-#include "../include/variable.h"
-#include "../include/number.h"
+#include "./include/atom.h"
+#include "./include/struct.h"
+#include "./include/variable.h"
+#include "./include/number.h"
 
 
 TEST(Struct, struct_match_to_variable) {

@@ -72,3 +72,14 @@ List * List::tail() {
     return new List(vector<Term *>(f, l));
 }
 
+
+Term* List::find(string symbol) {
+    vector<Term*> args = this->_elements;
+    for (int i = 0; i < args.size(); i++) {
+        Term *find = args[i]->find(symbol);
+        if (find != NULL) {
+            return find;
+        }
+    }
+    return NULL;
+}

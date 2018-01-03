@@ -1,8 +1,8 @@
 #ifndef UTSCANNER_H
 #define UTSCANNER_H
 
-#include "../include/scanner.h"
-#include "../include/global.h"
+#include "./include/scanner.h"
+#include "./include/global.h"
 
 TEST(Scanner, read_string) {
     Scanner scanner("X = 5");

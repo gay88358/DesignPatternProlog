@@ -1,6 +1,6 @@
 #include "../include/builder.h"
 Builder::Builder() {
-
+    this->_flyWeight = new FlyWeight;
 }
 
 Term * Builder::createVariable(string symbol) {

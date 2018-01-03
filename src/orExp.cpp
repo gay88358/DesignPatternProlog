@@ -16,4 +16,13 @@ bool OrExp::evaluate() {
     return left_val || right_val;
 }
 
-
+string OrExp::symbol() {
+    string leftSymbol = _left->symbol();
+    string rightSymbol = _right->symbol();
+    if (leftSymbol.empty() && rightSymbol.empty() == false)
+        return rightSymbol;
+    if (leftSymbol.empty() == false && rightSymbol.empty() == true)
+        return leftSymbol;
+        
+    return _left->symbol() + "; " + _right->symbol();
+}

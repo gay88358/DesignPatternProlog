@@ -10,12 +10,6 @@ using std::queue;
 template <class Item>
 class BFSIterator : public Iterator<Item> {
 public:
-    /*BFSIterator(Item);
-    Item currentItem();
-    bool isDone();
-    void next();
-    void first();
-    ~BFSIterator();*/
     BFSIterator(Item t): _term(t) {
         this->_isDone = false;
     }
@@ -29,13 +23,9 @@ public:
     }
 
     void next() {
-        Item term;
-        if (!this->_queue.empty()) {
-            term = this->_queue.front();
-        } else {
-            term = nullptr;
-        }
-
+        Item term = nullptr;
+        if (!this->_queue.empty())
+            term = this->_queue.front();    
         if (term != nullptr) {
             this->_currentTerm = term;
             this->_queue.pop();
@@ -47,7 +37,6 @@ public:
                 }
             }
         } else {
-
             this->_isDone = true;
         }
     } 
@@ -62,7 +51,6 @@ public:
 
     ~BFSIterator() {
     }
-
 private:
     Item _term;
     Iterator<Item> *_currentIt;
@@ -70,6 +58,5 @@ private:
     Item _currentTerm;
     bool _isDone;
 };
-//#include "../src/bfsIterator.tcc"
 
 #endif

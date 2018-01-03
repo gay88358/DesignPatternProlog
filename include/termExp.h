@@ -8,6 +8,8 @@ class TermExp : public Node {
 public:
     TermExp(Term* term);
     bool evaluate();
+    string symbol();
+
 private:    
     Term *_term;
 };

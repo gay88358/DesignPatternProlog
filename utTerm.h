@@ -1,10 +1,10 @@
 #ifndef UTTERM_H
 #define UTTERM_H
 
-#include "../include/number.h"
-#include "../include/atom.h"
-#include "../include/variable.h"
-#include "../include/term.h"
+#include "./include/number.h"
+#include "./include/atom.h"
+#include "./include/variable.h"
+#include "./include/term.h"
 #include <typeinfo>
 using std::type_info;
 

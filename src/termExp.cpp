@@ -8,3 +8,7 @@ TermExp::TermExp(Term* term): _term(term) {
 bool TermExp::evaluate() {
     return true;
 }
+
+string TermExp::symbol() {
+    return this->term->symbol();
+}

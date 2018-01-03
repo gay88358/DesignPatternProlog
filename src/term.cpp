@@ -14,7 +14,8 @@ string Term::value() const {
 }
 
 bool Term::match(Term &term) {
-    if (term.type() == "Variable")
+    Variable * v = dynamic_cast<Variable *>(&term);
+    if (v != nullptr)
         return term.match(*this);
     return _symbol == term._symbol;
 }
@@ -39,20 +40,6 @@ vector<Term*> Term::args() const {
 void Term::clear() {
     // do nothing
 }
-
-/*
-Iterator* Term::createDFSIterator() {
-    return new DFSIterator(this);
-}
-
-Iterator* Term::createBFSIterator() {
-    return new BFSIterator(this);
-}
-
-Iterator* Term::createIterator() {
-    return new NullIterator(this);
-}
-*/
 
 Term* Term::find(string symbol) {
     if (this->_symbol == symbol) {

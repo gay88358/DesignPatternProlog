@@ -1,10 +1,10 @@
 #ifndef UTVARIABLE_H
 #define UTVARIABLE_H
 
-#include "../include/variable.h"
-#include "../include/number.h"
-#include "../include/atom.h"
-#include "../include/struct.h"
+#include "./include/variable.h"
+#include "./include/number.h"
+#include "./include/atom.h"
+#include "./include/struct.h"
 
 TEST(Variable, test){
     Variable X("X");

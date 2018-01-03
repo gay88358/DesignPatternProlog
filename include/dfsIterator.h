@@ -9,12 +9,6 @@ using std::stack;
 template<class Item>
 class DFSIterator : public Iterator<Item> {
 public:
-    /*DFSIterator(Item);
-    Item currentItem();
-    bool isDone();
-    void next();
-    void first();
-    ~DFSIterator();*/
     DFSIterator(Item term):_term(term) {
         this->_isDone = false;
     }
@@ -42,6 +36,7 @@ public:
                 }
             }
         } else {
+            // when the number of element in stack is empty then isdone equal true 
             this->_isDone = true;
         }
     }   
@@ -56,13 +51,11 @@ public:
 
     ~DFSIterator() {
     }
-
 private:
     Item _term;
     Item _currentTerm;
     bool _isDone;
     stack<Item> _stack;
 };
-//#include "../src/dfsIterator.tcc"
 
 #endif

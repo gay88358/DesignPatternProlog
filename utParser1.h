@@ -1,13 +1,13 @@
 #ifndef UTPARSER_H
 #define UTPARSER_H
 
-#include "../include/parser.h"
-#include "../include/scanner.h"
-#include "../include/term.h"
-#include "../include/list.h"
-#include "../include/variable.h"
-#include "../include/number.h"
-#include "../include/flyWeight.h"
+#include "./include/parser.h"
+#include "./include/scanner.h"
+#include "./include/term.h"
+#include "./include/list.h"
+#include "./include/variable.h"
+#include "./include/number.h"
+#include "./include/flyWeight.h"
 
 TEST(Parser, createTerm_Var){
     Scanner scanner("X");

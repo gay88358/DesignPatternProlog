@@ -9,6 +9,7 @@
 #include "./token.h"
 #include "./list.h"
 #include "./struct.h"
+#include "./flyWeight.h"
 #include <iostream>
 #include <string>
 
@@ -23,7 +24,9 @@ public:
     Term * createNumber(double number);
     Term * createStruct(string symbol, vector<Term*> args);
     Term * createList(vector<Term*> args);
+    Term * GetFlyweight(string symbol);
 protected:
+    FlyWeight *_flyWeight;
     Global _g;
 };
 

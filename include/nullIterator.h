@@ -6,11 +6,13 @@
 template<class Item>
 class NullIterator : public Iterator<Item> {
 public:
-    NullIterator(Item);
-    Item currentItem();
+    NullIterator(Item term): _term(term) {
+
+    }
+    Item currentItem() {
+        return this->_term;
+    }
 private:
     Item _term;
 };
-
-#include "../src/nullIterator.tcc"
 #endif

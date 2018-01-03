@@ -26,21 +26,18 @@ int Struct::arity() {
 
 string Struct::value() const {
     string value = this->_name.symbol() + "(";
-    for (int i = 0; i < this->_args.size() - 1; i++) {
+    for (int i = 0; i < this->_args.size() - 1; i++) 
         value += this->_args[i]->value() + ", "; 
-    }    
     value += this->_args[this->_args.size() - 1]->value() + ")";
     return value;
 }
  
 string Struct::symbol() const {
-    
     string symbol = this->_name.symbol() + "(";
     if (this->_args.size() == 0)
         return symbol + ")";
-    for (int i = 0; i < this->_args.size() - 1; i++) {
+    for (int i = 0; i < this->_args.size() - 1; i++) 
         symbol += this->_args[i]->symbol() + ", "; 
-    }
     symbol += this->_args[this->_args.size() - 1]->symbol() + ")";
     return symbol;
 }

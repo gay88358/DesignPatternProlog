@@ -60,7 +60,7 @@ string Scanner::extractVar() {
 
 string Scanner::extractAtom() {
     int begin = this->position();
-    while(isalnum(currentChar())) {
+    while(isalnum(currentChar()) || currentChar() == '_') {
         this->_position++;        
     }
     return this->_buffer.substr(begin, this->_position - begin);

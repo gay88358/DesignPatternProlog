@@ -13,7 +13,7 @@ public:
   bool match(Term & term);
   int argSize() const;
   vector<Term*> args() const;
-
+  Term* find(string symbol);
 public:
   List ();
   List (vector<Term *> const & elements);

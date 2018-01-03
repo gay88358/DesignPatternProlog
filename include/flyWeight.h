@@ -2,13 +2,15 @@
 #define FLYWEIGHT_H
 
 #include <vector>
-#include <stack>         
+#include <stack>
+#include <utility>      // , std::make_pair
+         
 #include "./term.h"
 #include "./node.h"
 #include "./orExp.h"
 #include "./andExp.h"
 using std::stack;
-
+using std::pair;
 using std::vector;
 
 class FlyWeight {

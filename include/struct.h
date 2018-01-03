@@ -5,6 +5,7 @@
 #include <vector>
 #include "./atom.h"
 #include "./term.h"
+#include "./structIterator.h"
 using std::string;
 using std::vector;
 
@@ -20,6 +21,9 @@ public:
     vector<Term*> args() const;
     bool match(Term &term);
     Term* find(string symbol);
+    Iterator<Term*>* createIterator() {
+        return new StructIterator<Term*>(this);
+    }
 protected:
     Atom _name;
     vector<Term*> _args;
