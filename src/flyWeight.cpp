@@ -24,7 +24,6 @@ void FlyWeight::addTerms(Term* t) {
         this->_currentTerm = t;
         this->_allArgs.push_back(t);
     } else {
-        cout << findTerm->symbol() << " = " << findTerm->value() << endl;
         this->_currentTerm = findTerm;
         this->_allArgs.push_back(findTerm);
     }
@@ -52,12 +51,6 @@ void FlyWeight::addIndex() {
 }
 
 vector<Term*> FlyWeight::getargs() {
-    for (int i = 0; i < this->_args.size(); i++) {
-        for (int j = 0; j < this->_args[i].size(); j++) {
-            cout << this->_args[i][j]->symbol() << ", ";
-        }
-        cout << endl;
-    }
     return this->_allArgs;
 }
 

@@ -14,7 +14,6 @@ MatchExp::MatchExp(Term *left, Term *right): _leftTerm(left), _rightTerm(right) 
 }
 
 bool MatchExp::evaluate() {
-    cout << "match" << endl;
     return this->_leftTerm->match(*this->_rightTerm);
 }
 

@@ -1,8 +1,10 @@
 INC_DIR = include
 SRC = src
-TARGET = hw7
+TARGET = hw8
+PSHELL = shell
 
-all: $(TARGET)
+all: $(PSHELL) $(TARGET)
+
 
 $(TARGET): mainTerm.o number.o variable.o atom.o struct.o term.o list.o scanner.o token.o builder.o parser.o node.o matchExp.o andExp.o orExp.o termExp.o flyWeight.o 
 ifeq (${OS}, Windows_NT) 
@@ -11,8 +13,19 @@ else
 	g++ -o $(TARGET) mainTerm.o atom.o variable.o number.o struct.o term.o list.o scanner.o token.o builder.o parser.o node.o matchExp.o andExp.o orExp.o termExp.o flyWeight.o -lgtest -lpthread
 endif
 
+$(PSHELL): main.o number.o variable.o atom.o struct.o term.o list.o scanner.o token.o builder.o parser.o node.o matchExp.o andExp.o orExp.o termExp.o flyWeight.o 
+ifeq (${OS}, Windows_NT) 
+	g++ -o $(PSHELL) main.o atom.o variable.o number.o struct.o term.o list.o scanner.o token.o builder.o parser.o node.o matchExp.o andExp.o orExp.o termExp.o flyWeight.o -lgtest
+else
+	g++ -o $(PSHELL) main.o atom.o variable.o number.o struct.o term.o list.o scanner.o token.o builder.o parser.o node.o matchExp.o andExp.o orExp.o termExp.o flyWeight.o -lgtest -lpthread
+endif
+
 mainTerm.o: mainTerm.cpp
 	g++ -std=gnu++0x -c mainTerm.cpp
+
+main.o: main.cpp
+	g++ -std=gnu++0x -c main.cpp
+
 
 builder.o: $(INC_DIR)/builder.h $(SRC)/builder.cpp 
 	g++ -std=gnu++0x -c $(SRC)/builder.cpp
