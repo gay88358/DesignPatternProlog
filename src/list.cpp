@@ -83,3 +83,7 @@ Term* List::find(string symbol) {
     }
     return NULL;
 }
+
+Term* List::args(int index) const {
+    return _elements[index];
+}

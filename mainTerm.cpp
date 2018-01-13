@@ -6,10 +6,12 @@
 //#include "./utScanner.h"
 //#include "./utParser.h"
 //#include "./utParser1.h"
-//#include "./utNode.h"
-//#include "./utIterator.h"
 //#include "./utException.h"
-#include "./utExpression.h"
+//#include "./utExpression.h"
+//#include "./utNode.h"
+
+#include "./utIterator.h"
+
 int main( int argc , char **argv )
 {
     testing :: InitGoogleTest( &argc , argv ) ;

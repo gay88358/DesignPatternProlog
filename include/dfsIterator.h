@@ -10,43 +10,35 @@ template<class Item>
 class DFSIterator : public Iterator<Item> {
 public:
     DFSIterator(Item term):_term(term) {
-        this->_isDone = false;
     }
 
     Item currentItem() {
-        return this->_currentTerm;
+        return this->_s.top()->currentItem();
     }
 
     bool isDone() {
-        return this->_isDone;
+        if (this->_s.empty())
+            return true;
+        return this->_s.top()->isDone();
     }
 
     void next() {
-        Item term = nullptr;
-        if (!this->_stack.empty())
-            term =  this->_stack.top();
-        if (term) {
-            this->_currentTerm = term;
-            this->_stack.pop();
-            vector<Item> args = term->args();
-            if (args.size() > 0)
-            {
-                for (int i = args.size() - 1; i >= 0; i--) {
-                    this->_stack.push(args[i]);
-                }
-            }
-        } else {
-            // when the number of element in stack is empty then isdone equal true 
-            this->_isDone = true;
+        Iterator<Item> *it = this->_s.top();
+        if (!it->isDone()) {
+            Iterator<Item>* innerIt = it->currentItem()->createIterator();
+            innerIt->first();
+            it->next();
+            if (it->isDone())
+                this->_s.pop();
+            if (!innerIt->isDone())
+                this->_s.push(innerIt);
         }
     }   
 
     void first() {
-        vector<Item> args = this->_term->args();
-        for (int i = args.size() - 1; i >= 0; i--) {
-            this->_stack.push(args[i]);
-        }
-        this->next();
+        Iterator<Item> *it = this->_term->createIterator();
+        it->first();
+        this->_s.push(it);
     }
 
     ~DFSIterator() {
@@ -54,8 +46,8 @@ public:
 private:
     Item _term;
     Item _currentTerm;
-    bool _isDone;
     stack<Item> _stack;
+    stack<Iterator<Item>*> _s;
 };
 
 #endif

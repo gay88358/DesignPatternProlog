@@ -36,6 +36,7 @@
         "random": "cpp",
         "queue": "cpp",
         "*.tcc": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "array": "cpp"
     }
 }
